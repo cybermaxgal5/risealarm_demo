@@ -1,0 +1,32 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Antialiasing for High-Fidelity Text */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar to match the theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F5F0; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D4D0; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4F00; 
+}
