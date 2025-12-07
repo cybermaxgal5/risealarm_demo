@@ -33,10 +33,10 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
           <div 
             className={`
               hidden md:flex items-center gap-6 text-[11px] font-bold text-gray-600 uppercase tracking-widest transition-all duration-500 overflow-hidden
-              ${isExpanded ? 'opacity-100 max-w-[600px] px-4' : 'opacity-0 max-w-0 px-0'}
+              ${isExpanded ? 'opacity-100 max-w-[500px] px-4' : 'opacity-0 max-w-0 px-0'}
             `}
           >
-             <button onClick={() => onViewChange('shop')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">Shop</button>
+             {/* Shop Link Removed */}
              <button onClick={() => onViewChange('how-it-works')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">How It Works</button>
              <button onClick={() => onViewChange('about')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">About</button>
              <button onClick={() => onViewChange('support')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">FAQ</button>

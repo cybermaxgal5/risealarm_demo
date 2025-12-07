@@ -1,13 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, Trash2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { ThePod } from '../components/ui/DesignSystem';
 
 export const CartPage = ({ onBack }: { onBack: () => void }) => {
+  const [items, setItems] = useState([
+    { id: 1, name: 'Rise Alarm Starter Kit', batch: 'Batch 003 • Standard Edition', price: 25.00, quantity: 1 }
+  ]);
+
+  const updateQuantity = (id: number, delta: number) => {
+    setItems(items.map(item => {
+        if (item.id === id) {
+            const newQuantity = Math.max(1, item.quantity + delta);
+            return { ...item, quantity: newQuantity };
+        }
+        return item;
+    }));
+  };
+
+  const removeItem = (id: number) => {
+      setItems(items.filter(item => item.id !== id));
+  };
+
+  const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const total = subtotal; // Free shipping
+
+  if (items.length === 0) {
+      return (
+        <div className="min-h-screen bg-[#F9F9F7] pt-40 px-6 pb-24 text-center">
+             <h2 className="text-3xl font-bold mb-4">Your cart is empty.</h2>
+             <button onClick={onBack} className="text-[#FF6B00] font-bold hover:underline">Start Shopping</button>
+        </div>
+      );
+  }
+
   return (
-    <div className="min-h-screen bg-[#F9F9F7] pt-24 px-6 pb-24">
+    <div className="min-h-screen bg-[#F9F9F7] pt-40 px-6 pb-24">
        <div className="max-w-4xl mx-auto">
-            <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-8">
+            <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12">
                 <ArrowLeft size={16} /> Continue Shopping
             </button>
 
@@ -16,30 +46,38 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
             <div className="grid lg:grid-cols-3 gap-12">
                 {/* Cart Items */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-white p-6 rounded-3xl border border-gray-200 flex gap-6 items-center shadow-sm">
-                        <div className="w-24 h-24 bg-gray-100 rounded-xl flex items-center justify-center shrink-0">
-                            <div className="w-full h-full p-2">
-                                <ThePod scale={0.5} />
-                            </div>
-                        </div>
-                        <div className="flex-grow">
-                            <div className="flex justify-between items-start mb-2">
-                                <h3 className="font-bold text-lg">Rise Alarm Starter Kit</h3>
-                                <button className="text-gray-400 hover:text-red-500 transition-colors">
-                                    <Trash2 size={18} />
-                                </button>
-                            </div>
-                            <p className="text-sm text-gray-500 mb-4">Batch 003 • Standard Edition</p>
-                            <div className="flex justify-between items-center">
-                                <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
-                                    <button className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors">-</button>
-                                    <span className="font-bold text-sm">1</span>
-                                    <button className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors">+</button>
+                    {items.map((item) => (
+                        <div key={item.id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col md:flex-row gap-6 items-center shadow-sm">
+                            <div className="w-24 h-24 bg-gray-100 rounded-xl flex items-center justify-center shrink-0">
+                                <div className="w-full h-full p-2">
+                                    <ThePod scale={0.5} />
                                 </div>
-                                <div className="font-bold text-lg">$25.00</div>
+                            </div>
+                            <div className="flex-grow w-full">
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-bold text-lg">{item.name}</h3>
+                                    <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500 transition-colors">
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                                <p className="text-sm text-gray-500 mb-4">{item.batch}</p>
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
+                                        <button 
+                                            onClick={() => updateQuantity(item.id, -1)}
+                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors font-bold"
+                                        >-</button>
+                                        <span className="font-bold text-sm w-4 text-center">{item.quantity}</span>
+                                        <button 
+                                            onClick={() => updateQuantity(item.id, 1)}
+                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors font-bold"
+                                        >+</button>
+                                    </div>
+                                    <div className="font-bold text-lg">${(item.price * item.quantity).toFixed(2)}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
 
                 {/* Summary */}
@@ -49,7 +87,7 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                         <div className="space-y-4 text-sm mb-8">
                             <div className="flex justify-between text-gray-600">
                                 <span>Subtotal</span>
-                                <span>$25.00</span>
+                                <span>${subtotal.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Shipping</span>
@@ -61,7 +99,7 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                             </div>
                             <div className="border-t border-gray-100 pt-4 flex justify-between font-bold text-xl">
                                 <span>Total</span>
-                                <span>$25.00</span>
+                                <span>${total.toFixed(2)}</span>
                             </div>
                         </div>
                         

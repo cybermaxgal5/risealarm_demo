@@ -88,7 +88,7 @@ export const FAQSection = () => {
   ];
 
   return (
-    <section className="py-32 bg-white px-6">
+    <section className="pt-32 pb-12 bg-white px-6">
        <div className="max-w-[1000px] mx-auto text-center">
           <ScrollReveal>
              <div className="flex flex-col items-center gap-4 mb-16">

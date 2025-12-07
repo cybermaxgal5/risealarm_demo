@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bell } from 'lucide-react';
+import { Bell, ArrowRight } from 'lucide-react';
 
 const PhoneMockup = ({ delay = 0 }: { delay?: number }) => (
   <div 
@@ -55,41 +55,44 @@ export const DownloadPage = () => {
                 The Rise Alarm App is currently in final beta testing. It will launch on both iOS and Android stores shortly.
              </p>
 
-             <div className="flex flex-col sm:flex-row gap-4">
-                {/* Apple Store Button */}
-                <button disabled className="px-6 py-3 bg-black text-white rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-colors shadow-xl cursor-not-allowed opacity-80">
-                   <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74 1.18 0 2.45-1.15 4.12-1.14 1.05.04 2.12.38 2.98 1.19-2.6 1.6-2.15 5.42.44 6.6-.58 1.84-1.58 3.52-2.62 5.58zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-                   <div className="text-left">
-                      <div className="text-[10px] leading-none mb-1">Download on the</div>
-                      <div className="text-xl font-bold leading-none">App Store</div>
+             <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                {/* Official Style Apple Button */}
+                <button disabled className="bg-black text-white rounded-lg px-4 py-2 flex items-center gap-3 hover:bg-gray-800 transition-colors opacity-80 cursor-not-allowed shadow-xl">
+                   <svg viewBox="0 0 384 512" width="24" height="24" fill="currentColor">
+                      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-11.4 69.5-34.3z"/>
+                   </svg>
+                   <div className="flex flex-col items-start leading-none">
+                      <span className="text-[10px] font-medium">Download on the</span>
+                      <span className="text-lg font-bold">App Store</span>
                    </div>
                 </button>
 
-                {/* Google Play Button */}
-                <button disabled className="px-6 py-3 bg-black text-white rounded-xl flex items-center gap-3 hover:bg-gray-800 transition-colors shadow-xl cursor-not-allowed opacity-80">
-                   <svg className="w-7 h-7" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4285F4" d="M23.65 12.37c.18-.38.28-.8.28-1.24 0-.48-.11-.92-.31-1.32-.01 0-.01-.01-.01-.01L14.73 18.7l.02.01 8.9-6.34z" />
-                        <path fill="#34A853" d="M1.37 1.08L12.92 12.63 14.73 10.82 2.62.48C2.1.15 1.57.06 1.08.17l.29.91z" />
-                        <path fill="#FBBC04" d="M1.08 23.83c.49.11 1.02.02 1.54-.31L14.73 13.18 12.92 11.37 1.37 22.92l-.29.91z" />
-                        <path fill="#EA4335" d="M14.73 13.18L23.63 19.1c.17-.09.32-.2.46-.33L14.73 10.82l-1.81 1.18 1.81 1.18z" />
+                {/* Official Style Google Button */}
+                <button disabled className="bg-black text-white rounded-lg px-4 py-2 flex items-center gap-3 hover:bg-gray-800 transition-colors opacity-80 cursor-not-allowed shadow-xl">
+                   <svg viewBox="0 0 512 512" width="24" height="24" fill="currentColor">
+                      <path fill="#fff" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
                    </svg>
-                   <div className="text-left">
-                      <div className="text-[10px] leading-none mb-1">GET IT ON</div>
-                      <div className="text-xl font-bold leading-none">Google Play</div>
+                   <div className="flex flex-col items-start leading-none">
+                      <span className="text-[10px] font-medium">GET IT ON</span>
+                      <span className="text-lg font-bold">Google Play</span>
                    </div>
                 </button>
              </div>
 
-             <div className="mt-12 p-6 bg-white rounded-2xl border border-gray-200 inline-flex items-center gap-6 shadow-lg">
-                 <div className="w-24 h-24 bg-[#111] p-2 rounded-lg relative overflow-hidden">
-                     {/* QR Code Placeholder with style */}
-                     <div className="w-full h-full border-4 border-white border-dashed rounded opacity-50"></div>
-                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">QR CODE</div>
-                 </div>
-                 <div className="text-left">
-                    <div className="font-bold text-[#111]">Scan to join waitlist</div>
-                    <div className="text-sm text-gray-500">Be notified instantly.</div>
-                 </div>
+             {/* Waitlist Input */}
+             <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-lg max-w-md">
+                 <h3 className="font-bold text-[#111] mb-2">Don't miss the launch.</h3>
+                 <p className="text-sm text-gray-500 mb-4">Join the waitlist to get notified when the app goes live.</p>
+                 <form className="flex gap-2">
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email" 
+                      className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF6B00] transition-colors"
+                    />
+                    <button type="submit" className="bg-[#FF6B00] text-white px-4 py-3 rounded-xl font-bold hover:bg-[#e05e00] transition-colors flex items-center justify-center">
+                       <ArrowRight size={18} />
+                    </button>
+                 </form>
              </div>
           </div>
 
