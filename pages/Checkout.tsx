@@ -46,7 +46,7 @@ export const CheckoutPage = ({ onBack }: any) => {
                 </div>
 
                 <button type="button" className="w-full py-5 bg-[#FF6B00] text-white rounded-xl font-bold text-xl hover:bg-[#cc3f00] transition-colors shadow-xl shadow-orange-500/20">
-                   Pay $49.00
+                   Pay $25.00
                 </button>
             </form>
           </div>
@@ -60,15 +60,15 @@ export const CheckoutPage = ({ onBack }: any) => {
                 </div>
                 <div>
                    <h4 className="font-bold text-lg">Rise Alarm Starter Kit</h4>
-                   <p className="text-sm text-gray-500">Batch 002</p>
-                   <div className="mt-2 font-mono">$49.00</div>
+                   <p className="text-sm text-gray-500">Batch 003</p>
+                   <div className="mt-2 font-mono">$25.00</div>
                 </div>
              </div>
              
              <div className="space-y-4 border-t border-gray-100 pt-6 text-sm">
                 <div className="flex justify-between">
                    <span className="text-gray-500">Subtotal</span>
-                   <span>$49.00</span>
+                   <span>$25.00</span>
                 </div>
                 <div className="flex justify-between">
                    <span className="text-gray-500">Shipping</span>
@@ -76,7 +76,7 @@ export const CheckoutPage = ({ onBack }: any) => {
                 </div>
                 <div className="flex justify-between font-bold text-xl pt-4 border-t border-gray-100">
                    <span>Total</span>
-                   <span>$49.00</span>
+                   <span>$25.00</span>
                 </div>
              </div>
           </div>

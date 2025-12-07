@@ -27,9 +27,9 @@ export const ShopPage = ({ onCheckout }: { onCheckout: () => void }) => {
              
              <h1 className="text-5xl lg:text-7xl font-bold text-[#111] mb-4 tracking-tight">Rise Alarm Pod.</h1>
              <div className="flex items-baseline gap-4 mb-8">
-                <span className="text-3xl font-bold text-[#FF6B00]">$18.00</span>
-                <span className="text-xl text-gray-400 line-through decoration-1">$39.00</span>
-                <span className="text-xs font-bold bg-[#FF6B00]/10 text-[#FF6B00] px-2 py-1 rounded">54% OFF</span>
+                <span className="text-3xl font-bold text-[#FF6B00]">$25.00</span>
+                <span className="text-xl text-gray-400 line-through decoration-1">$50.00</span>
+                <span className="text-xs font-bold bg-[#FF6B00]/10 text-[#FF6B00] px-2 py-1 rounded">50% OFF</span>
              </div>
 
              <div className="prose prose-lg text-gray-600 mb-8 leading-relaxed">
@@ -58,7 +58,7 @@ export const ShopPage = ({ onCheckout }: { onCheckout: () => void }) => {
                onClick={onCheckout}
                className="w-full py-5 bg-[#111] text-white rounded-full font-bold text-lg hover:bg-[#FF6B00] transition-colors flex items-center justify-center gap-3 group shadow-xl"
              >
-                Add to Cart — $18.00
+                Add to Cart — $25.00
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
              </button>
              

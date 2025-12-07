@@ -1,6 +1,6 @@
 
 import './index.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Instagram, Linkedin } from 'lucide-react';
 
@@ -8,9 +8,9 @@ import { Instagram, Linkedin } from 'lucide-react';
 import { Navbar, Ticker } from './components/ui/Navbar';
 import { Hero } from './components/sections/Hero';
 import { ProblemSection } from './components/sections/Problem';
-import { SocialsSection } from './components/sections/Socials';
 import { ComparisonSection } from './components/sections/Comparison';
 import { HomePricing } from './components/sections/HomePricing';
+import { TestimonialsSection } from './components/sections/Testimonials';
 
 // Pages
 import { AboutPage } from './pages/About';
@@ -23,13 +23,14 @@ import { CheckoutPage } from './pages/Checkout';
 const App = () => {
   const [currentView, setCurrentView] = useState('home');
 
-  useEffect(() => {
-    window.scrollTo(0,0);
+  // useLayoutEffect fires synchronously after all DOM mutations.
+  // This ensures the scroll happens BEFORE the user sees the new page rendered at the bottom.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
   }, [currentView]);
 
   const renderView = () => {
     switch(currentView) {
-      // 'shop' route removed, logic handled in Navbar to scroll to pricing
       case 'about': return <AboutPage />;
       case 'download': return <DownloadPage />;
       case 'support': return <SupportPage />;
@@ -42,28 +43,30 @@ const App = () => {
           <Ticker />
           <ProblemSection />
           <ComparisonSection />
+          <TestimonialsSection />
           <HomePricing onBuy={() => setCurrentView('checkout')} />
-          <SocialsSection />
+          {/* SocialsSection removed as requested */}
         </>
       );
     }
   };
 
   return (
-    <div className="bg-[#F9F9F7] text-[#111] min-h-screen font-sans">
+    <div className="bg-[#F9F9F7] text-[#111] min-h-screen font-sans flex flex-col">
       <Navbar onViewChange={(view) => {
+        // Logic to handle scroll to pricing if 'shop' was still triggered somehow
         if (view === 'shop') {
           setCurrentView('home');
-          // Small timeout to allow render if coming from another page
           setTimeout(() => {
-            document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+             const pricingEl = document.getElementById('pricing');
+             if (pricingEl) pricingEl.scrollIntoView({ behavior: 'smooth' });
           }, 100);
         } else {
           setCurrentView(view);
         }
       }} />
       
-      <main>
+      <main className="flex-grow">
         {renderView()}
       </main>
 
@@ -111,7 +114,10 @@ style.textContent = `
     100% { transform: translateX(-50%); }
   }
   .animate-marquee {
-    animation: marquee 40s linear infinite;
+    animation: marquee 60s linear infinite;
+  }
+  .animate-marquee-reverse {
+    animation: marquee 60s linear infinite reverse;
   }
   .pattern-grid-lg {
     background-image: linear-gradient(currentColor 1px, transparent 1px), linear-gradient(to right, currentColor 1px, transparent 1px);

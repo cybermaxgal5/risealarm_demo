@@ -21,7 +21,7 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                   onClick={() => setSelectedPack('pod')}
                 >
                    <div className="absolute top-0 right-0 bg-[#FF6B00] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-bl-xl rounded-tr-2xl flex items-center gap-1">
-                      <Tag size={10} /> SAVE 54%
+                      <Tag size={10} /> SAVE 50%
                    </div>
                    <div className="flex items-center gap-6">
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedPack === 'pod' ? 'border-[#FF6B00]' : 'border-gray-300'}`}>
@@ -33,8 +33,8 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                       </div>
                    </div>
                    <div className="text-right">
-                      <div className="text-2xl font-bold">$18</div>
-                      <div className="text-xs text-gray-400 font-mono line-through">$39</div>
+                      <div className="text-2xl font-bold">$25</div>
+                      <div className="text-xs text-gray-400 font-mono line-through">$50</div>
                    </div>
                 </div>
 
@@ -86,7 +86,7 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                    <div className="space-y-4 mb-8 text-sm text-gray-400">
                       <div className="flex justify-between">
                          <span>Item Subtotal</span>
-                         <span className="text-white">${selectedPack === 'pod' ? '18.00' : '0.00'}</span>
+                         <span className="text-white">${selectedPack === 'pod' ? '25.00' : '0.00'}</span>
                       </div>
                       <div className="flex justify-between">
                          <span>Shipping</span>
@@ -95,7 +95,7 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                       <div className="h-[1px] bg-white/10 my-4"></div>
                       <div className="flex justify-between text-lg font-bold text-white">
                          <span>Total</span>
-                         <span>${selectedPack === 'pod' ? '18.00' : '0.00'}</span>
+                         <span>${selectedPack === 'pod' ? '25.00' : '0.00'}</span>
                       </div>
                    </div>
                    <button 

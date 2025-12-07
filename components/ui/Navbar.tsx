@@ -27,19 +27,16 @@ export const Navbar = ({ onViewChange }: { onViewChange: (view: string) => void 
          `}
        >
           <div className="flex items-center gap-2 cursor-pointer group shrink-0" onClick={() => onViewChange('home')}>
-             {/* Ensure 'ralogo.png' matches exact case in public/assets/ */}
              <img src="/assets/ralogo.png" alt="Rise Alarm Logo" className="h-6 md:h-8 w-auto object-contain" />
           </div>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu - Shop Removed */}
           <div 
             className={`
               hidden md:flex items-center gap-6 text-[11px] font-bold text-gray-600 uppercase tracking-widest transition-all duration-500 overflow-hidden
               ${isExpanded ? 'opacity-100 max-w-[600px] px-4' : 'opacity-0 max-w-0 px-0'}
             `}
           >
-             {/* Shop now scrolls to pricing on home */}
-             <button onClick={() => onViewChange('shop')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">Shop</button>
              <button onClick={() => onViewChange('how-it-works')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">How It Works</button>
              <button onClick={() => onViewChange('about')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">About</button>
              <button onClick={() => onViewChange('support')} className="hover:text-[#FF6B00] transition-colors whitespace-nowrap">FAQ</button>
@@ -52,8 +49,11 @@ export const Navbar = ({ onViewChange }: { onViewChange: (view: string) => void 
              >
                App
              </button>
+             {/* Use scroll to pricing logic handled in index */}
              <button 
-               onClick={() => onViewChange('shop')}
+               onClick={() => {
+                   document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+               }}
                className="bg-[#111] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-[#FF6B00] transition-colors shadow-lg"
              >
                Pre-Order
