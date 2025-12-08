@@ -21,7 +21,7 @@ export const HomePricing = ({ onBuy }: { onBuy: () => void }) => {
                              Limited Batch 003 Available
                         </div>
                         <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter leading-none">
-                            The Protocol.<br/>
+                            Rise Alarm.<br/>
                             <span className="text-[#FF6B00]">Unlocked.</span>
                         </h2>
                         <p className="text-gray-400 text-lg mb-10 max-w-md leading-relaxed">
