@@ -19,7 +19,7 @@ export const useScrollProgress = () => {
 
 // --- CORE COMPONENTS ---
 
-export const ScrollReveal = ({ children, className = "", delay = 0 }: any) => {
+export const ScrollReveal = ({ children, className = "", delay = 0, yOffset = 40 }: any) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,7 +31,7 @@ export const ScrollReveal = ({ children, className = "", delay = 0 }: any) => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -40,8 +40,8 @@ export const ScrollReveal = ({ children, className = "", delay = 0 }: any) => {
   return (
     <div
       ref={ref}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+      className={`transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] transform ${
+        isVisible ? 'opacity-100 translate-y-0 translate-x-0' : `opacity-0 translate-y-[${yOffset}px]`
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -60,120 +60,8 @@ export const SectionTag = ({ text }: { text: string }) => (
 // --- VISUAL ASSETS (The Pod & Background) ---
 
 export const FluidBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const gl = canvas.getContext('webgl');
-    if (!gl) return;
-
-    const vsSource = `
-      attribute vec4 aVertexPosition;
-      void main() { gl_Position = aVertexPosition; }
-    `;
-
-    const fsSource = `
-      precision mediump float;
-      uniform float uTime;
-      uniform vec2 uResolution;
-
-      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-      vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-
-      float snoise(vec2 v) {
-        const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-        vec2 i  = floor(v + dot(v, C.yy) );
-        vec2 x0 = v - i + dot(i, C.xx);
-        vec2 i1;
-        i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-        vec4 x12 = x0.xyxy + C.xxzz;
-        x12.xy -= i1;
-        i = mod289(i);
-        vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
-        vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-        m = m*m ;
-        m = m*m ;
-        vec3 x = 2.0 * fract(p * C.www) - 1.0;
-        vec3 h = abs(x) - 0.5;
-        vec3 ox = floor(x + 0.5);
-        vec3 a0 = x - ox;
-        m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
-        vec3 g;
-        g.x  = a0.x  * x0.x  + h.x  * x0.y;
-        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-        return 130.0 * dot(m, g);
-      }
-
-      void main() {
-        vec2 uv = gl_FragCoord.xy / uResolution;
-        float time = uTime * 0.3; 
-        
-        float noise1 = snoise(uv * 2.0 + time);
-        float noise2 = snoise(uv * 3.5 - time * 0.5);
-        float pattern = noise1 * 0.5 + noise2 * 0.5;
-        
-        vec3 bg = vec3(0.97, 0.97, 0.96); // #F9F9F7
-        vec3 orange = vec3(1.0, 0.42, 0.0); // #FF6B00
-        vec3 deepOrange = vec3(0.8, 0.3, 0.0);
-
-        vec3 color = mix(bg, orange, smoothstep(0.2, 0.8, pattern * 0.4 + uv.x * 0.2));
-        color = mix(color, deepOrange, uv.y * 0.1);
-
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `;
-
-    const initShaderProgram = (gl: WebGLRenderingContext, vs: string, fs: string) => {
-      const loadShader = (gl: WebGLRenderingContext, type: number, source: string) => {
-        const shader = gl.createShader(type)!;
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        return shader;
-      };
-      const shaderProgram = gl.createProgram()!;
-      gl.attachShader(shaderProgram, loadShader(gl, gl.VERTEX_SHADER, vs));
-      gl.attachShader(shaderProgram, loadShader(gl, gl.FRAGMENT_SHADER, fs));
-      gl.linkProgram(shaderProgram);
-      return shaderProgram;
-    };
-
-    const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
-    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
-    const uTime = gl.getUniformLocation(shaderProgram, 'uTime');
-    const uResolution = gl.getUniformLocation(shaderProgram, 'uResolution');
-
-    const positions = [-1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0];
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    let startTime = Date.now();
-    const render = () => {
-       if (!canvas) return;
-       canvas.width = window.innerWidth;
-       canvas.height = window.innerHeight;
-       gl.viewport(0, 0, canvas.width, canvas.height);
-       
-       gl.clearColor(0.97, 0.97, 0.96, 1.0);
-       gl.clear(gl.COLOR_BUFFER_BIT);
-
-       gl.useProgram(shaderProgram);
-       gl.enableVertexAttribArray(vertexPosition);
-       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-       gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
-
-       gl.uniform1f(uTime, (Date.now() - startTime) * 0.001);
-       gl.uniform2f(uResolution, canvas.width, canvas.height);
-
-       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-       requestAnimationFrame(render);
-    };
-    render();
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full -z-10" />;
+    // Simplified for performance, kept if needed for specific sections
+  return <div className="absolute inset-0 bg-gray-100 -z-10" />;
 };
 
 export const ThePod = ({ scale = 1, className = "", highlight = 'none' }: { scale?: number, className?: string, highlight?: string }) => {

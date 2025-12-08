@@ -76,7 +76,7 @@ const App = () => {
               </h2>
               
               <div className="flex flex-col md:flex-row justify-between w-full text-sm text-gray-500 font-mono uppercase tracking-widest items-center">
-                 <div className="mb-4 md:mb-0">© 2025 Rise Alarm Inc.</div>
+                 <div className="mb-4 md:mb-0">© 2025 Rise Alarm</div>
                  
                  <div className="flex gap-8 mb-6 md:mb-0">
                     <button onClick={() => setCurrentView('support')} className="hover:text-white transition-colors">Help</button>

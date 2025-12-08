@@ -48,11 +48,13 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                 <div className="lg:col-span-2 space-y-6">
                     {items.map((item) => (
                         <div key={item.id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col md:flex-row gap-6 items-center shadow-sm">
-                            <div className="w-24 h-24 bg-gray-100 rounded-xl flex items-center justify-center shrink-0">
-                                <div className="w-full h-full p-2">
+                            {/* Fixed width container for image to prevent explosion */}
+                            <div className="w-full md:w-32 h-32 bg-gray-100 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden relative">
+                                <div className="absolute inset-0 flex items-center justify-center">
                                     <ThePod scale={0.5} />
                                 </div>
                             </div>
+                            
                             <div className="flex-grow w-full">
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="font-bold text-lg">{item.name}</h3>
@@ -60,17 +62,17 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                                         <Trash2 size={18} />
                                     </button>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-4">{item.batch}</p>
+                                <p className="text-sm text-gray-500 mb-6">{item.batch}</p>
                                 <div className="flex justify-between items-center">
-                                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
+                                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1 border border-gray-100">
                                         <button 
                                             onClick={() => updateQuantity(item.id, -1)}
-                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors font-bold"
+                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black rounded-md transition-colors font-bold"
                                         >-</button>
                                         <span className="font-bold text-sm w-4 text-center">{item.quantity}</span>
                                         <button 
                                             onClick={() => updateQuantity(item.id, 1)}
-                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white rounded-md transition-colors font-bold"
+                                            className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black rounded-md transition-colors font-bold"
                                         >+</button>
                                     </div>
                                     <div className="font-bold text-lg">${(item.price * item.quantity).toFixed(2)}</div>
@@ -95,7 +97,7 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Tax</span>
-                                <span>Calculated at next step</span>
+                                <span>Calculated at checkout</span>
                             </div>
                             <div className="border-t border-gray-100 pt-4 flex justify-between font-bold text-xl">
                                 <span>Total</span>

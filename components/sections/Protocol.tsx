@@ -72,8 +72,8 @@ export const ProtocolSection = () => {
          <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 z-0">
              <div className="w-[400vw] h-[2px] bg-gradient-to-r from-gray-200 via-[#FF6B00] to-gray-200 opacity-50 transform translate-y-32"></div>
          </div>
-         <div className="max-w-[1400px] mx-auto w-full px-6 mb-12 relative z-10 pl-24">
-            <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-sm mb-4">The Methodology</h2>
+         <div className="max-w-[1400px] mx-auto w-full px-6 mb-4 relative z-10 pl-24">
+            <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-sm mb-4">The Steps</h2>
             <h3 className="text-5xl md:text-7xl font-bold text-[#111] tracking-tighter">Three steps to<br/>wake up for real.</h3>
          </div>
          <div 
@@ -111,9 +111,9 @@ export const ProtocolSection = () => {
       </div>
     </section>
 
-    <section className="block lg:hidden py-24 bg-[#F2F2F0] px-6">
-        <div className="mb-16">
-            <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-xs mb-4">The Methodology</h2>
+    <section className="block lg:hidden py-12 bg-[#F2F2F0] px-6">
+        <div className="mb-12">
+            <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-xs mb-4">The Steps</h2>
             <h3 className="text-4xl font-bold text-[#111] tracking-tighter">Three steps to<br/>wake up for real.</h3>
         </div>
         <div className="relative space-y-12">

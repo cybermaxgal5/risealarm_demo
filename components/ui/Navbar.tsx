@@ -136,34 +136,12 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
 };
 
 export const Ticker = () => {
-  const items = [
-    "Pre-Order Batch 003 Open",
-    "Ships December 2025",
-    "iOS & Android Compatible",
-    "No Subscription Required",
-    "Limited Availability",
-    "World Wide Shipping"
-  ];
-
   return (
-    <div className="bg-[#FF6B00] text-[#0A0A0A] overflow-hidden py-3 relative z-30 border-b border-[#0A0A0A]/10">
-      <div className="flex w-fit animate-marquee items-center">
-         <div className="flex shrink-0 items-center">
-            {[...items, ...items].map((text, i) => (
-               <div key={i} className="flex items-center px-6 md:px-12">
-                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest whitespace-nowrap">{text}</span>
-                  <div className="w-1.5 h-1.5 bg-[#0A0A0A] rounded-full ml-12 md:ml-24" />
-               </div>
-            ))}
-         </div>
-         <div className="flex shrink-0 items-center">
-            {[...items, ...items].map((text, i) => (
-               <div key={`dup-${i}`} className="flex items-center px-6 md:px-12">
-                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest whitespace-nowrap">{text}</span>
-                  <div className="w-1.5 h-1.5 bg-[#0A0A0A] rounded-full ml-12 md:ml-24" />
-               </div>
-            ))}
-         </div>
+    <div className="bg-[#FF6B00] h-3 overflow-hidden relative z-30 border-b border-[#0A0A0A]/10 w-full">
+      <div className="absolute inset-0 flex">
+         {/* Animated Striped Pattern */}
+         <div className="w-full h-full bg-[repeating-linear-gradient(45deg,#FF6B00,#FF6B00_10px,#E05E00_10px,#E05E00_20px)] animate-marquee" />
+         <div className="w-full h-full bg-[repeating-linear-gradient(45deg,#FF6B00,#FF6B00_10px,#E05E00_10px,#E05E00_20px)] animate-marquee" />
       </div>
     </div>
   );

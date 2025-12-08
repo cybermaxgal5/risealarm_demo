@@ -38,11 +38,32 @@ export const AboutPage = () => {
           <div className="space-y-12">
             <ScrollReveal delay={100}>
               <h2 className="text-2xl font-bold mb-4">Our Mission</h2>
-              <p className="text-xl text-gray-600 leading-relaxed border-l-4 border-[#FF6B00] pl-6">
+              <p className="text-xl text-gray-600 leading-relaxed border-l-4 border-[#FF6B00] pl-6 mb-16">
                 Our mission is to end the snooze cycle for good by building tools that help people wake up on time, feel alert, and start their mornings with momentum.
               </p>
             </ScrollReveal>
+          </div>
 
+           {/* Founders moved here */}
+           <div className="mb-24">
+              <ScrollReveal delay={150}>
+                  <h2 className="text-3xl font-bold mb-12">Meet the Founders</h2>
+                  <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+                     <FounderCard 
+                        name="Max"
+                        title="Co-Founder"
+                        linkedin="#"
+                     />
+                     <FounderCard 
+                        name="Dan"
+                        title="Co-Founder"
+                        linkedin="#"
+                     />
+                  </div>
+              </ScrollReveal>
+           </div>
+
+          <div className="space-y-12">
             <ScrollReveal delay={200}>
               <h2 className="text-2xl font-bold mb-4">Our Story</h2>
               <div className="prose prose-lg text-gray-600">
@@ -74,25 +95,6 @@ export const AboutPage = () => {
                   </p>
                </div>
             </ScrollReveal>
-          </div>
-       </div>
-
-       {/* Founders */}
-       <div className="max-w-[1000px] mx-auto px-6 mb-32">
-          <div className="text-center mb-16">
-             <h2 className="text-3xl font-bold">Meet the Founders</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24">
-             <FounderCard 
-                name="Max"
-                title="Co-Founder"
-                linkedin="#"
-             />
-             <FounderCard 
-                name="Dan"
-                title="Co-Founder"
-                linkedin="#"
-             />
           </div>
        </div>
 
