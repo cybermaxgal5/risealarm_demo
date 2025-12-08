@@ -76,7 +76,7 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: () => void }) => {
                     onClick={onAddToCart}
                     className="w-full py-4 md:py-5 text-lg"
                 >
-                    Add to Cart — $25.00
+                    Pre-Order Now — $25.00
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
                 </ShinyButton>
              </Reveal>

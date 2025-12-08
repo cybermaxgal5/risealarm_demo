@@ -36,8 +36,6 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
            className={`
              pointer-events-auto
              transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.25,1)]
-             /* MOBILE: Width is calc(100% - 24px) for safe margins on all phones */
-             /* DESKTOP: Width expands or contracts */
              ${isExpanded ? 'w-[calc(100%-24px)] md:w-[1200px] bg-white/70 border-white/50 py-3 md:py-4' : 'w-[calc(100%-24px)] md:w-[600px] bg-white/90 border-white/80 py-2.5 md:py-3'}
              shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] backdrop-blur-2xl border rounded-full px-4 md:px-6 flex justify-between items-center relative z-50
            `}
@@ -46,7 +44,8 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
             <div className="flex-1 flex justify-start">
                 <div className="flex items-center gap-2 md:gap-3 cursor-pointer group shrink-0" onClick={() => handleMobileNav('home')}>
                    <img src="/assets/ralogo.png" alt="Rise Alarm Logo" className="h-6 md:h-8 w-auto object-contain transition-transform duration-500 group-hover:rotate-12" />
-                   <span className={`font-bold text-sm md:text-base tracking-tight text-[#111] transition-all duration-500 ${isExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 md:opacity-100 md:translate-x-0'}`}>
+                   {/* MOBILE FIX: Text always visible (opacity-100), Logic only applies to desktop (md:) */}
+                   <span className={`font-bold text-sm md:text-base tracking-tight text-[#111] transition-all duration-500 opacity-100 translate-x-0 ${isExpanded ? 'md:opacity-100 md:translate-x-0' : 'md:opacity-100 md:translate-x-0'}`}>
                       Rise Alarm
                    </span>
                 </div>
@@ -139,36 +138,5 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
           </div>
       </div>
     </>
-  );
-};
-
-export const Ticker = () => {
-  return (
-    <div className="relative w-full h-[12vh] md:h-[18vh] bg-white overflow-hidden -mt-1 border-b border-[#FF6B00]/10">
-       <div className="absolute inset-0 w-[200%] flex animate-wave-clean">
-          <div className="w-[50%] h-full relative">
-               <svg className="absolute bottom-0 w-full h-full text-[#FF6B00] opacity-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,192L60,197.3C120,203,240,213,360,202.7C480,192,600,160,720,160C840,160,960,192,1080,208C1200,224,1320,224,1380,224L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-               <svg className="absolute bottom-0 w-full h-[80%] text-[#FF6B00] opacity-40" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,128L60,138.7C120,149,240,171,360,165.3C480,160,600,128,720,138.7C840,149,960,203,1080,208C1200,213,1320,171,1380,149.3L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-               <svg className="absolute bottom-0 w-full h-[60%] text-[#FF6B00] opacity-100" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,64L60,85.3C120,107,240,149,360,149.3C480,149,600,107,720,106.7C840,107,960,149,1080,160C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-          </div>
-          <div className="w-[50%] h-full relative">
-               <svg className="absolute bottom-0 w-full h-full text-[#FF6B00] opacity-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,192L60,197.3C120,203,240,213,360,202.7C480,192,600,160,720,160C840,160,960,192,1080,208C1200,224,1320,224,1380,224L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-               <svg className="absolute bottom-0 w-full h-[80%] text-[#FF6B00] opacity-40" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,128L60,138.7C120,149,240,171,360,165.3C480,160,600,128,720,138.7C840,149,960,203,1080,208C1200,213,1320,171,1380,149.3L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-               <svg className="absolute bottom-0 w-full h-[60%] text-[#FF6B00] opacity-100" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                 <path fill="currentColor" d="M0,64L60,85.3C120,107,240,149,360,149.3C480,149,600,107,720,106.7C840,107,960,149,1080,160C1200,171,1320,149,1380,138.7L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
-               </svg>
-          </div>
-       </div>
-    </div>
   );
 };
