@@ -26,7 +26,7 @@ export const HomePricing = ({ onBuy }: { onBuy: () => void }) => {
 
                         <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 mb-12 text-left max-w-sm sm:max-w-none mx-auto">
                              {[
-                                "Rise Alarm NFC Pod",
+                                "Rise Alarm Pod",
                                 "Lifetime App Access",
                                 "Unlimited Schedules",
                                 "1-Year Warranty"

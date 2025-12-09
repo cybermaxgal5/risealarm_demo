@@ -30,7 +30,7 @@ export const ShinyButton: React.FC<ShinyButtonProps> = ({ children, className = 
     return (
         <button 
             className={`
-                relative overflow-hidden group rounded-full font-bold transition-all duration-300 active:scale-95
+                relative overflow-hidden group rounded-full font-bold transition-all duration-500 active:scale-95
                 ${variant === 'primary' 
                     ? 'bg-[#111] text-white hover:bg-black border border-transparent' 
                     : 'bg-white text-[#111] border border-gray-200 hover:border-[#FF6B00]'}
@@ -85,7 +85,7 @@ export const TiltCard = ({ children, className = "" }: { children?: React.ReactN
         >
             <div 
                 ref={ref} 
-                className="transition-transform duration-200 ease-out will-change-transform transform-style-3d h-full"
+                className="transition-transform duration-500 ease-out will-change-transform transform-style-3d h-full"
                 style={{ transformStyle: 'preserve-3d' }}
             >
                 {children}
@@ -94,7 +94,7 @@ export const TiltCard = ({ children, className = "" }: { children?: React.ReactN
     );
 };
 
-// --- 3. TEXT REVEAL ---
+// --- 3. TEXT REVEAL (SLOWER, MORE LUXURIOUS) ---
 export const TextReveal = ({ text, className = "", delay = 0 }: { text: React.ReactNode, className?: string, delay?: number }) => {
     if (typeof text !== 'string') return <div className={className}>{text}</div>;
 
@@ -106,8 +106,8 @@ export const TextReveal = ({ text, className = "", delay = 0 }: { text: React.Re
                 {words.map((word, i) => (
                     <span 
                         key={i} 
-                        className="inline-block origin-top-left opacity-0 animate-[word-up_0.8s_cubic-bezier(0.2,1,0.2,1)_forwards]"
-                        style={{ animationDelay: `${delay + (i * 0.05)}s` }}
+                        className="inline-block origin-top-left opacity-0 animate-[word-up_1.2s_cubic-bezier(0.25,1,0.5,1)_forwards]"
+                        style={{ animationDelay: `${delay + (i * 0.08)}s` }}
                     >
                         {word}
                     </span>
@@ -117,7 +117,7 @@ export const TextReveal = ({ text, className = "", delay = 0 }: { text: React.Re
     );
 };
 
-// --- 4. REVEAL ---
+// --- 4. REVEAL (PRO ANIMATION TIMING) ---
 export const Reveal = ({ children, className = "", delay = 0, mode = 'blur' }: any) => {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -133,17 +133,18 @@ export const Reveal = ({ children, className = "", delay = 0, mode = 'blur' }: a
         return () => observer.disconnect();
     }, []);
 
+    // INCREASED DURATION TO 1.2s for "Geiler" feel
     const styles = {
         blur: {
             opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
-            filter: isVisible ? 'blur(0)' : 'blur(10px)',
-            transition: `all 1s cubic-bezier(0.2, 1, 0.2, 1) ${delay}ms`
+            transform: isVisible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(30px)',
+            filter: isVisible ? 'blur(0)' : 'blur(12px)',
+            transition: `all 1.2s cubic-bezier(0.25, 1, 0.5, 1) ${delay}ms`
         },
         slide: {
             opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
-            transition: `all 0.8s cubic-bezier(0.2, 1, 0.2, 1) ${delay}ms`
+            transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
+            transition: `all 1.0s cubic-bezier(0.25, 1, 0.5, 1) ${delay}ms`
         },
         mask: { }
     };
@@ -152,8 +153,8 @@ export const Reveal = ({ children, className = "", delay = 0, mode = 'blur' }: a
         return (
             <div ref={ref} className={`overflow-hidden ${className}`}>
                 <div style={{
-                     transform: isVisible ? 'translateY(0)' : 'translateY(100%)',
-                     transition: `transform 1s cubic-bezier(0.2, 1, 0.2, 1) ${delay}ms`
+                     transform: isVisible ? 'translateY(0)' : 'translateY(110%)',
+                     transition: `transform 1.2s cubic-bezier(0.25, 1, 0.5, 1) ${delay}ms`
                 }}>
                     {children}
                 </div>
@@ -183,11 +184,10 @@ export const ThePod = ({ scale = 1, className = "", highlight = 'none' }: { scal
     <div 
       className={`relative group perspective-1000 mx-auto ${className}`}
       style={{ 
-        // Logic: Use variable scale for calculation but cap at 100% width to prevent overflow
         width: '100%',
         maxWidth: `${300 * scale}px`, 
         height: 'auto',
-        aspectRatio: '1/1' // Ensure aspect ratio stays constant even when shrinking
+        aspectRatio: '1/1' 
       }}
     >
        <div 

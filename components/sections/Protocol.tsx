@@ -90,15 +90,15 @@ export const ProtocolSection = () => {
              <div className="w-[400vw] h-[2px] bg-gradient-to-r from-gray-200 via-[#FF6B00] to-gray-200 opacity-50 transform translate-y-32"></div>
          </div>
 
-         {/* Header */}
-         <div className="max-w-[1400px] mx-auto w-full px-6 mb-4 relative z-10 pl-24">
+         {/* Header - Tightened spacing to HowItWorks title */}
+         <div className="max-w-[1400px] mx-auto w-full px-6 mb-16 relative z-10 pl-24 pt-0">
             <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-sm mb-4">The Steps</h2>
             <h3 className="text-5xl md:text-7xl font-bold text-[#111] tracking-tighter">Three steps to<br/>wake up for real.</h3>
          </div>
 
-         {/* Cards Container - Driven by CSS Var */}
+         {/* Cards Container - Increased top margin for "more space" */}
          <div 
-           className="flex px-6 pl-[20vw] will-change-transform"
+           className="flex px-6 pl-[20vw] will-change-transform mt-24"
            style={{ 
               transform: 'translateX(calc(0px - (var(--scroll-progress) * 150vw)))' 
            }}
@@ -108,15 +108,19 @@ export const ProtocolSection = () => {
                  key={index} 
                  className="w-[600px] flex-shrink-0 mr-[30vw] relative z-10"
                >
-                  <div className="bg-white/60 backdrop-blur-xl border border-white/40 p-12 rounded-[3rem] h-full relative group hover:border-[#FF6B00] transition-all duration-500 shadow-lg hover:shadow-2xl">
-                     <div className="absolute -top-6 -right-6 w-12 h-12 bg-[#FF6B00] rounded-full flex items-center justify-center text-white font-bold border-4 border-[#F2F2F0]">
+                  {/* "Geiler" Card Styling */}
+                  <div className="bg-white/80 backdrop-blur-2xl border border-white/60 p-12 rounded-[3rem] h-full relative group hover:border-[#FF6B00]/50 transition-all duration-700 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_80px_-20px_rgba(255,107,0,0.15)] overflow-hidden">
+                     {/* Gloss Effect */}
+                     <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+                     
+                     <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#111] rounded-full flex items-center justify-center text-white font-bold text-xl border-8 border-[#F2F2F0] z-20 group-hover:scale-110 transition-transform duration-500">
                         {index + 1}
                      </div>
-                     <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-[#FF6B00] mb-8 group-hover:scale-110 transition-transform duration-500 shadow-md border border-gray-100">
+                     <div className="w-20 h-20 bg-gradient-to-br from-white to-gray-50 rounded-2xl flex items-center justify-center text-[#FF6B00] mb-8 group-hover:scale-110 transition-transform duration-500 shadow-sm border border-gray-100">
                         <step.icon size={40} />
                      </div>
-                     <h4 className="text-4xl font-bold text-[#111] mb-6">{step.title}</h4>
-                     <p className="text-xl text-gray-500 leading-relaxed">
+                     <h4 className="text-4xl font-bold text-[#111] mb-6 tracking-tight">{step.title}</h4>
+                     <p className="text-xl text-gray-500 leading-relaxed font-medium">
                         {step.desc}
                      </p>
                   </div>
@@ -147,10 +151,10 @@ export const ProtocolSection = () => {
             {steps.map((step, i) => (
                 <div key={i} className="transform transition-all duration-700">
                     <div className="relative pl-16">
-                        <div className="absolute left-0 top-0 w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center z-10 text-[#FF6B00] font-bold shadow-sm">
+                        <div className="absolute left-0 top-0 w-12 h-12 bg-[#111] border-4 border-[#F2F2F0] rounded-full flex items-center justify-center z-10 text-white font-bold shadow-sm">
                             {i+1}
                         </div>
-                        <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                        <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-lg">
                              <div className="mb-4 text-[#FF6B00]">
                                 <step.icon size={32} />
                              </div>

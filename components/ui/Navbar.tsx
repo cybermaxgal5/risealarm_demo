@@ -63,7 +63,7 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
                        <button 
                         key={item}
                         onClick={() => onViewChange(item)} 
-                        className="hover:text-[#FF6B00] transition-colors whitespace-nowrap relative group"
+                        className="hover:text-[#FF6B00] transition-colors whitespace-nowrap relative group capitalize"
                        >
                            {item.replace(/-/g, ' ')}
                            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#FF6B00] transition-all duration-300 group-hover:w-full"></span>
@@ -122,7 +122,7 @@ export const Navbar = ({ onViewChange, cartCount }: { onViewChange: (view: strin
                  <button 
                     key={view}
                     onClick={() => handleMobileNav(view)} 
-                    className="text-3xl md:text-4xl font-bold text-[#111] hover:text-[#FF6B00] transition-colors transform hover:scale-105 duration-300"
+                    className="text-3xl md:text-4xl font-bold text-[#111] hover:text-[#FF6B00] transition-colors transform hover:scale-105 duration-300 capitalize"
                     style={{ transitionDelay: `${i * 50}ms` }}
                  >
                     {view.replace(/-/g, ' ')}

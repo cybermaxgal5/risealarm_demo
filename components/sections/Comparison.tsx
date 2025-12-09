@@ -49,12 +49,12 @@ export const ComparisonSection = () => {
                     </ul>
                 </div>
 
-                {/* NO Column */}
-                <div className="relative opacity-60 hover:opacity-100 transition-opacity duration-500">
+                {/* NO Column - REDESIGNED */}
+                <div className="relative">
                      <Reveal mode="mask" delay={200}>
                          <div className="flex items-center gap-4 mb-10">
-                            <div className="text-5xl font-bold text-gray-400">NO</div>
-                            <div className="h-px bg-gray-200 flex-grow"></div>
+                            <div className="text-5xl font-bold text-[#111]">NO</div>
+                            <div className="h-px bg-[#111] flex-grow"></div>
                         </div>
                     </Reveal>
                     
@@ -68,10 +68,11 @@ export const ComparisonSection = () => {
                         ].map((item, i) => (
                             <Reveal key={i} delay={(i * 100) + 200} mode="slide">
                                 <li className="flex items-start gap-6 group cursor-default">
-                                    <div className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 shrink-0 mt-1 group-hover:border-red-400 group-hover:text-red-500 transition-colors transform group-hover:scale-110">
+                                    <div className="w-6 h-6 rounded-full border border-red-500 flex items-center justify-center text-red-600 shrink-0 mt-1 bg-red-50 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 transform group-hover:scale-110">
                                         <X size={14} strokeWidth={3} />
                                     </div>
-                                    <span className="text-xl font-medium text-gray-400 leading-tight group-hover:text-gray-600 transition-colors">{item}</span>
+                                    {/* Text is now #111 (dark) instead of gray, as requested */}
+                                    <span className="text-xl font-medium text-gray-800 leading-tight group-hover:text-[#111] transition-colors">{item}</span>
                                 </li>
                             </Reveal>
                         ))}
