@@ -70,9 +70,9 @@ export const ProtocolSection = () => {
     <section ref={containerRef} className="hidden lg:block relative h-[400vh] bg-[#F2F2F0] overflow-visible" style={{ '--scroll-progress': 0 } as React.CSSProperties}>
       <div ref={stickyRef} className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
          
-         {/* Background Big Numbers - Driven by CSS Var */}
+         {/* Background Big Numbers - Moved Down (top-[65%]) */}
          <div 
-           className="absolute top-1/2 left-0 w-full flex items-center pointer-events-none opacity-[0.06] select-none text-[#000] will-change-transform"
+           className="absolute top-[65%] left-0 w-full flex items-center pointer-events-none opacity-[0.06] select-none text-[#000] will-change-transform"
            style={{ 
              transform: 'translateY(-50%) translateX(calc(20vw - (var(--scroll-progress) * 150vw)))',
              transition: 'transform 0.1s linear' // Slight smoothing for the numbers
@@ -90,15 +90,15 @@ export const ProtocolSection = () => {
              <div className="w-[400vw] h-[2px] bg-gradient-to-r from-gray-200 via-[#FF6B00] to-gray-200 opacity-50 transform translate-y-32"></div>
          </div>
 
-         {/* Header - Tightened spacing to HowItWorks title */}
+         {/* Header */}
          <div className="max-w-[1400px] mx-auto w-full px-6 mb-16 relative z-10 pl-24 pt-0">
             <h2 className="text-[#FF6B00] font-mono font-bold uppercase tracking-widest text-sm mb-4">The Steps</h2>
             <h3 className="text-5xl md:text-7xl font-bold text-[#111] tracking-tighter">Three steps to<br/>wake up for real.</h3>
          </div>
 
-         {/* Cards Container - Increased top margin for "more space" */}
+         {/* Cards Container */}
          <div 
-           className="flex px-6 pl-[20vw] will-change-transform mt-24"
+           className="flex px-6 pl-[20vw] will-change-transform mt-12"
            style={{ 
               transform: 'translateX(calc(0px - (var(--scroll-progress) * 150vw)))' 
            }}
@@ -108,14 +108,11 @@ export const ProtocolSection = () => {
                  key={index} 
                  className="w-[600px] flex-shrink-0 mr-[30vw] relative z-10"
                >
-                  {/* "Geiler" Card Styling */}
+                  {/* "Geiler" Card Styling - Removed Top Right Icon */}
                   <div className="bg-white/80 backdrop-blur-2xl border border-white/60 p-12 rounded-[3rem] h-full relative group hover:border-[#FF6B00]/50 transition-all duration-700 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_80px_-20px_rgba(255,107,0,0.15)] overflow-hidden">
                      {/* Gloss Effect */}
                      <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
                      
-                     <div className="absolute -top-6 -right-6 w-16 h-16 bg-[#111] rounded-full flex items-center justify-center text-white font-bold text-xl border-8 border-[#F2F2F0] z-20 group-hover:scale-110 transition-transform duration-500">
-                        {index + 1}
-                     </div>
                      <div className="w-20 h-20 bg-gradient-to-br from-white to-gray-50 rounded-2xl flex items-center justify-center text-[#FF6B00] mb-8 group-hover:scale-110 transition-transform duration-500 shadow-sm border border-gray-100">
                         <step.icon size={40} />
                      </div>
@@ -128,8 +125,8 @@ export const ProtocolSection = () => {
             ))}
          </div>
 
-         {/* Progress Bar - Driven by CSS Var */}
-         <div className="absolute bottom-12 left-0 w-full px-6 md:px-[max(2rem,calc(50vw-700px))]">
+         {/* Progress Bar - Moved further down (bottom-8) */}
+         <div className="absolute bottom-8 left-0 w-full px-6 md:px-[max(2rem,calc(50vw-700px))]">
             <div className="w-[300px] h-1.5 bg-gray-200 rounded-full overflow-hidden">
                <div 
                  className="h-full bg-[#FF6B00] will-change-transform origin-left" 
