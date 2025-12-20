@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { ThePod } from '../components/ui/DesignSystem';
 import { createCheckout, addItemToCheckout } from '../lib/shopify';
 
@@ -22,6 +22,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
     }
   ]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const updateQuantity = (id: number, delta: number) => {
     setItems(items.map(item => {
@@ -43,34 +44,39 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
   // --- SHOPIFY CHECKOUT LOGIC ---
   const handleCheckout = async () => {
     setIsCheckingOut(true);
+    setErrorMsg(null);
     
     // 1. Erstelle einen neuen Checkout bei Shopify
     const checkout = await createCheckout();
     
     if (!checkout) {
-        alert("Shopify is not connected correctly yet. Check API Keys.");
+        setErrorMsg("Connection to Store failed. Please contact support or try again later. (Error: Permission Denied)");
         setIsCheckingOut(false);
         return;
     }
 
     // 2. Füge das Produkt hinzu
-    // Da wir nur 1 Produkt haben, nehmen wir das erste Item
     const item = items[0];
     
-    // WICHTIG: Wenn wir noch im 'Demo Modus' sind (keine echte Variant ID), können wir nicht fortfahren
     if (item.variantId === 'default_variant_id') {
-        alert("Demo Mode: Checkout works once API Keys are added in lib/shopify.ts");
+        setErrorMsg("Demo Mode Active: Cannot checkout with placeholder product.");
         setIsCheckingOut(false);
         return;
     }
 
-    await addItemToCheckout(checkout.id, item.variantId, item.quantity);
+    const updatedCheckout = await addItemToCheckout(checkout.id, item.variantId, item.quantity);
+    
+    if (!updatedCheckout) {
+        setErrorMsg("Could not add item to checkout.");
+        setIsCheckingOut(false);
+        return;
+    }
 
-    // 3. Leite den User zu Shopify weiter (Sicher bezahlen)
-    if (checkout.webUrl) {
-        window.location.href = checkout.webUrl;
+    // 3. Leite den User zu Shopify weiter
+    if (updatedCheckout.webUrl) {
+        window.location.href = updatedCheckout.webUrl;
     } else {
-        alert("Something went wrong with Shopify redirect.");
+        setErrorMsg("Redirect URL missing.");
         setIsCheckingOut(false);
     }
   };
@@ -154,6 +160,13 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
                             </div>
                         </div>
                         
+                        {errorMsg && (
+                            <div className="mb-4 p-4 bg-red-50 text-red-600 text-sm rounded-xl flex items-start gap-2">
+                                <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                                <span>{errorMsg}</span>
+                            </div>
+                        )}
+
                         <button 
                             onClick={handleCheckout}
                             disabled={isCheckingOut}
