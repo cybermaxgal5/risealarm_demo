@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { ThePod } from '../components/ui/DesignSystem';
-import { createCheckout, addItemToCheckout } from '../lib/shopify';
+import { createCartWithItem } from '../lib/shopify';
 
 interface CartProps {
     onBack: () => void;
@@ -41,44 +41,30 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal;
 
-  // --- SHOPIFY CHECKOUT LOGIC ---
+  // --- SHOPIFY CHECKOUT LOGIC (NEW CART API) ---
   const handleCheckout = async () => {
     setIsCheckingOut(true);
     setErrorMsg(null);
     
-    // 1. Erstelle einen neuen Checkout bei Shopify
-    const checkout = await createCheckout();
-    
-    if (!checkout) {
-        setErrorMsg("Connection to Store failed. Please contact support or try again later. (Error: Permission Denied)");
-        setIsCheckingOut(false);
-        return;
-    }
-
-    // 2. Füge das Produkt hinzu
     const item = items[0];
-    
+
     if (item.variantId === 'default_variant_id') {
         setErrorMsg("Demo Mode Active: Cannot checkout with placeholder product.");
         setIsCheckingOut(false);
         return;
     }
 
-    const updatedCheckout = await addItemToCheckout(checkout.id, item.variantId, item.quantity);
+    // DER NEUE WEG: Ein Aufruf erstellt Cart + fügt Item hinzu + gibt URL zurück
+    const cart = await createCartWithItem(item.variantId, item.quantity);
     
-    if (!updatedCheckout) {
-        setErrorMsg("Could not add item to checkout.");
+    if (!cart || !cart.checkoutUrl) {
+        setErrorMsg("Connection to Store failed. Check permissions (Storefront API) or Try again.");
         setIsCheckingOut(false);
         return;
     }
 
-    // 3. Leite den User zu Shopify weiter
-    if (updatedCheckout.webUrl) {
-        window.location.href = updatedCheckout.webUrl;
-    } else {
-        setErrorMsg("Redirect URL missing.");
-        setIsCheckingOut(false);
-    }
+    // Weiterleitung
+    window.location.href = cart.checkoutUrl;
   };
 
   if (items.length === 0) {

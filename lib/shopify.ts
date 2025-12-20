@@ -4,48 +4,77 @@ import Client from 'shopify-buy';
 // --- KONFIGURATION ---
 const SHOPIFY_DOMAIN = 'rise-10115.myshopify.com'; 
 const SHOPIFY_STOREFRONT_TOKEN = '48704be0544cb9591e10c70f8ba3c249';
+// Using 2025-01 to ensure latest features, though 2024-01 works too.
+const API_VERSION = '2025-01'; 
 
-// Initialisiere den Client
+// Initialisiere den alten Client für Produkt-Abfragen (Read-Only ist meist ok)
 export const client = Client.buildClient({
   domain: SHOPIFY_DOMAIN,
   storefrontAccessToken: SHOPIFY_STOREFRONT_TOKEN,
-  apiVersion: '2024-01'
+  apiVersion: API_VERSION
 });
 
-// Hilfsfunktion: Checkout erstellen
-export const createCheckout = async () => {
-  try {
-    const checkout = await client.checkout.create();
-    return checkout;
-  } catch (e: any) {
-    // Logging fix: Error Objekte lassen sich oft nicht stringify-en
-    console.error("--- SHOPIFY ERROR START ---");
-    console.error(e); 
-    if (e.message) console.error("Message:", e.message);
-    if (e.graphQLErrors) console.error("GraphQL Errors:", e.graphQLErrors);
-    console.error("--- SHOPIFY ERROR END ---");
-    
-    // Check auf Permission Error
-    if (e.message && (e.message.includes("checkoutCreate") || e.message.includes("access denied"))) {
-        console.error("DIAGNOSE: Der Token hat keine Schreibrechte für Checkouts.");
-        console.error("LÖSUNG: Im Shopify Admin unter 'Storefront API Integration' den Haken bei 'unauthenticated_write_checkouts' setzen.");
+// --- HELPER: Direkter Fetch für Cart API (Der "Neue Weg") ---
+async function storefrontRequest(query: string, variables = {}) {
+  const response = await fetch(`https://${SHOPIFY_DOMAIN}/api/${API_VERSION}/graphql.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+  return response.json();
+}
+
+// Ersetzt createCheckout + addItemToCheckout
+// Erstellt einen Cart UND fügt das Item in einem Schritt hinzu
+export const createCartWithItem = async (variantId: string, quantity: number) => {
+  const query = `
+    mutation createCart($lines: [CartLineInput!]) {
+      cartCreate(input: { lines: $lines }) {
+        cart {
+          id
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
+        }
+      }
     }
-    return null;
-  }
-};
+  `;
 
-// Hilfsfunktion: Produkt zum Checkout hinzufügen
-export const addItemToCheckout = async (checkoutId: string, variantId: string, quantity: number) => {
+  const variables = {
+    lines: [
+      {
+        merchandiseId: variantId,
+        quantity: quantity
+      }
+    ]
+  };
+
   try {
-    const lineItemsToAdd = [{ variantId, quantity }];
-    return await client.checkout.addLineItems(checkoutId, lineItemsToAdd);
+    const { data, errors } = await storefrontRequest(query, variables);
+    
+    if (errors) {
+      console.error("GraphQL Errors:", errors);
+      return null;
+    }
+
+    if (data?.cartCreate?.userErrors?.length > 0) {
+      console.error("Cart User Errors:", data.cartCreate.userErrors);
+      return null;
+    }
+
+    return data.cartCreate.cart; // Gibt { id, checkoutUrl } zurück
   } catch (e) {
-    console.error("Shopify Add Item Error:", e);
+    console.error("Network Error:", e);
     return null;
   }
 };
 
-// Hilfsfunktion: Produkt laden
+// Alte Funktionen für Kompatibilität (falls benötigt), aber wir nutzen jetzt die obere
 export const fetchProductByHandle = async (handle: string) => {
   try {
     return await client.product.fetchByHandle(handle);
