@@ -25,14 +25,16 @@ import { CartPage } from './pages/Cart';
 const App = () => {
   const [currentView, setCurrentView] = useState('home');
   const [cartCount, setCartCount] = useState(0);
+  const [selectedVariantId, setSelectedVariantId] = useState<string | undefined>(undefined);
 
   // FORCED SCROLL TO TOP
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [currentView]);
 
-  const addToCart = () => {
+  const addToCart = (variantId?: string) => {
     setCartCount(prev => prev + 1);
+    if (variantId) setSelectedVariantId(variantId);
     setCurrentView('cart');
   };
 
@@ -45,7 +47,7 @@ const App = () => {
       case 'how-it-works': return <HowItWorksPage />;
       case 'legal': return <LegalHub onBack={() => setCurrentView('home')} />;
       case 'shop': return <ShopPage onAddToCart={addToCart} />;
-      case 'cart': return <CartPage onBack={() => setCurrentView('shop')} />;
+      case 'cart': return <CartPage onBack={() => setCurrentView('shop')} cartVariantId={selectedVariantId} />;
       default: return (
         <>
           <Hero />

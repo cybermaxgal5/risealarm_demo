@@ -1,12 +1,27 @@
 
-import React, { useState } from 'react';
-import { ArrowLeft, Trash2, ShieldCheck, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
 import { ThePod } from '../components/ui/DesignSystem';
+import { createCheckout, addItemToCheckout } from '../lib/shopify';
 
-export const CartPage = ({ onBack }: { onBack: () => void }) => {
+interface CartProps {
+    onBack: () => void;
+    cartVariantId?: string; // The Shopify ID passed from ShopPage
+}
+
+export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
+  // If no variant ID is passed, fallback to default (for demo purposes)
   const [items, setItems] = useState([
-    { id: 1, name: 'Rise Alarm Starter Kit', batch: 'Batch 003 • Standard Edition', price: 25.00, quantity: 1 }
+    { 
+        id: 1, 
+        name: 'Rise Alarm Starter Kit', 
+        batch: 'Batch 003 • Standard Edition', 
+        price: 25.00, 
+        quantity: 1,
+        variantId: cartVariantId || 'default_variant_id' 
+    }
   ]);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const updateQuantity = (id: number, delta: number) => {
     setItems(items.map(item => {
@@ -23,7 +38,42 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
   };
 
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const total = subtotal; // Free shipping
+  const total = subtotal;
+
+  // --- SHOPIFY CHECKOUT LOGIC ---
+  const handleCheckout = async () => {
+    setIsCheckingOut(true);
+    
+    // 1. Erstelle einen neuen Checkout bei Shopify
+    const checkout = await createCheckout();
+    
+    if (!checkout) {
+        alert("Shopify is not connected correctly yet. Check API Keys.");
+        setIsCheckingOut(false);
+        return;
+    }
+
+    // 2. Füge das Produkt hinzu
+    // Da wir nur 1 Produkt haben, nehmen wir das erste Item
+    const item = items[0];
+    
+    // WICHTIG: Wenn wir noch im 'Demo Modus' sind (keine echte Variant ID), können wir nicht fortfahren
+    if (item.variantId === 'default_variant_id') {
+        alert("Demo Mode: Checkout works once API Keys are added in lib/shopify.ts");
+        setIsCheckingOut(false);
+        return;
+    }
+
+    await addItemToCheckout(checkout.id, item.variantId, item.quantity);
+
+    // 3. Leite den User zu Shopify weiter (Sicher bezahlen)
+    if (checkout.webUrl) {
+        window.location.href = checkout.webUrl;
+    } else {
+        alert("Something went wrong with Shopify redirect.");
+        setIsCheckingOut(false);
+    }
+  };
 
   if (items.length === 0) {
       return (
@@ -37,7 +87,7 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
   return (
     <div className="min-h-screen bg-[#F9F9F7] pt-40 px-6 pb-24">
        <div className="max-w-4xl mx-auto">
-            <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12">
+            <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors">
                 <ArrowLeft size={16} /> Continue Shopping
             </button>
 
@@ -48,7 +98,6 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                 <div className="lg:col-span-2 space-y-6">
                     {items.map((item) => (
                         <div key={item.id} className="bg-white p-6 rounded-3xl border border-gray-200 flex flex-col md:flex-row gap-6 items-center shadow-sm">
-                            {/* Fixed width container for image to prevent explosion */}
                             <div className="w-full md:w-32 h-32 bg-gray-100 rounded-2xl flex items-center justify-center shrink-0 overflow-hidden relative">
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <ThePod scale={0.5} />
@@ -105,9 +154,16 @@ export const CartPage = ({ onBack }: { onBack: () => void }) => {
                             </div>
                         </div>
                         
-                        <button className="w-full py-4 bg-[#111] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#FF6B00] transition-colors shadow-lg group">
-                            Checkout
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        <button 
+                            onClick={handleCheckout}
+                            disabled={isCheckingOut}
+                            className="w-full py-4 bg-[#111] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#FF6B00] transition-colors shadow-lg group disabled:opacity-70 disabled:cursor-wait"
+                        >
+                            {isCheckingOut ? (
+                                <><Loader2 className="animate-spin" /> Processing...</>
+                            ) : (
+                                <>Checkout <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></>
+                            )}
                         </button>
 
                         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-gray-400">
