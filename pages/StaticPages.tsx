@@ -1,46 +1,131 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 
-export const LegalHub = ({ onBack }: any) => (
-  <div className="min-h-screen bg-[#F9F9F7] pt-32 px-6 pb-24">
-    <div className="max-w-3xl mx-auto">
-      <button 
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors"
-      >
-        <ArrowLeft size={16} /> Back
-      </button>
-      <h1 className="text-4xl md:text-5xl font-bold mb-12 text-[#111]">Legal Information</h1>
-      
-      <div className="space-y-16">
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-[#FF6B00]">Terms of Service</h2>
-          <div className="prose prose-sm text-gray-600">
-             <p>Last updated: 11/21/2025. By using Rise Alarm, you agree to our terms.</p>
-             <p><strong>1. Acceptance:</strong> Accessing our app or using the pod constitutes agreement.</p>
-             <p><strong>2. Liability:</strong> We are not responsible if you still oversleep. The system helps, but you must do the work.</p>
-             <p><strong>3. Returns:</strong> 30-day policy applies to undamaged hardware.</p>
-          </div>
-        </section>
+export const LegalHub = ({ onBack }: any) => {
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-[#FF6B00]">Privacy Policy</h2>
-          <div className="prose prose-sm text-gray-600">
-             <p><strong>Data Collection:</strong> We collect email (for account), payment info (via Stripe), and usage stats.</p>
-             <p><strong>No Audio:</strong> The Pod does not record audio. The app does not record sleep sounds.</p>
-             <p><strong>Third Parties:</strong> We share data only with necessary providers (hosting, payment).</p>
-             <p><strong>Rights:</strong> You can request data deletion at privacy@risedaily.app.</p>
-          </div>
-        </section>
+  return (
+    <div className="min-h-screen bg-[#F9F9F7] pt-32 px-6 pb-24">
+      <div className="max-w-3xl mx-auto">
+        <button 
+          onClick={onBack}
+          className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors"
+        >
+          <ArrowLeft size={16} /> Back
+        </button>
+        
+        <h1 className="text-4xl md:text-5xl font-bold mb-16 text-[#111]">Legal Information</h1>
+        
+        <div className="space-y-20">
+          
+          {/* TERMS OF SERVICE (Short placeholder as user only provided Privacy Policy full text) */}
+          <section>
+            <h2 className="text-2xl font-bold mb-6 text-[#FF6B00] uppercase tracking-wider text-sm border-b border-gray-200 pb-2">Terms of Service</h2>
+            <div className="prose prose-sm text-gray-600">
+               <p><strong>1. Acceptance:</strong> Accessing our app or using the pod constitutes agreement to our terms.</p>
+               <p><strong>2. Liability:</strong> We provide tools to help you wake up, but we are not responsible for any consequences of oversleeping.</p>
+               <p><strong>3. Returns:</strong> Rise Alarm Pods come with a 30-day money-back guarantee for undamaged hardware.</p>
+            </div>
+          </section>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-[#FF6B00]">Warranty</h2>
-          <div className="prose prose-sm text-gray-600">
-             <p>Rise Alarm Pods come with a 1-year limited warranty against manufacturing defects. This does not cover water damage, accidental breakage, or loss.</p>
-          </div>
-        </section>
+          {/* PRIVACY POLICY - EXACT TEXT INSERTION */}
+          <section>
+            <h2 className="text-2xl font-bold mb-6 text-[#FF6B00] uppercase tracking-wider text-sm border-b border-gray-200 pb-2">Privacy Policy</h2>
+            <div className="prose prose-stone text-[#111] max-w-none leading-relaxed">
+               
+               <p className="text-sm text-gray-500 mb-6">Last updated: December 17, 2025</p>
+               
+               <p className="mb-4">
+                 Rise is built with privacy by design. We do not collect, store, or sell personal data. This Privacy Policy explains how Rise handles information when you use the Rise mobile application and related website (collectively, the “Service”).
+               </p>
+               <p className="mb-8">
+                 By using Rise, you agree to the practices described in this Privacy Policy.
+               </p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Information We Collect</h3>
+               <p className="font-bold mb-2">None.</p>
+               <p className="mb-4">Rise does not collect personal information or user data.</p>
+               <p className="mb-2">Specifically, Rise:</p>
+               <ul className="list-disc pl-5 mb-6 space-y-1 text-gray-600">
+                 <li>Does not require accounts, sign-ups, or authentication</li>
+                 <li>Does not collect names, email addresses, phone numbers, or identifiers</li>
+                 <li>Does not track users across apps or websites</li>
+                 <li>Does not store personal data on external servers</li>
+               </ul>
+               <p>All core app functionality operates entirely on your device.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Automatically Generated System Data</h3>
+               <p className="mb-4">Rise may rely on limited, anonymous system-level information provided by your device’s operating system, such as crash reports or performance diagnostics. This information:</p>
+               <ul className="list-disc pl-5 mb-6 space-y-1 text-gray-600">
+                 <li>Is generated by the operating system, not by Rise</li>
+                 <li>Is not linked to you personally</li>
+                 <li>Cannot be used to identify you</li>
+                 <li>Is used solely to improve app stability and reliability</li>
+               </ul>
+               <p>Rise does not use third-party analytics or tracking SDKs.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Audio, Alarms, and User-Recorded Sounds</h3>
+               <p className="mb-4">Rise allows users to optionally record their own alarm sounds.</p>
+               <ul className="list-disc pl-5 mb-6 space-y-1 text-gray-600">
+                 <li>Any audio recordings are created only at the user’s request</li>
+                 <li>Recordings are stored locally on the user’s device</li>
+                 <li>Rise does not upload, transmit, access, or analyze these recordings</li>
+                 <li>Recordings are never shared with Rise or third parties</li>
+               </ul>
+               <p>Rise does not record audio in the background or without user action.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">NFC and Device Permissions</h3>
+               <p className="mb-4">Rise uses device permissions (such as NFC and notifications) solely to enable core alarm functionality.</p>
+               <ul className="list-disc pl-5 mb-6 space-y-1 text-gray-600">
+                 <li>NFC interactions occur entirely on-device</li>
+                 <li>NFC data is not logged, stored, or transmitted</li>
+                 <li>Rise does not access personal content beyond what is required for core features</li>
+               </ul>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Data Sharing and Disclosure</h3>
+               <p className="mb-4">Because Rise does not collect personal data, we do not sell, share, rent, or disclose personal information to third parties.</p>
+               <p>Information may be disclosed only if required by law or to comply with legal obligations.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Data Security</h3>
+               <p className="mb-4">Rise does not maintain user accounts or store personal data on external servers. Any app-related data, including optional user-recorded alarm sounds, remains on your device and is protected by your device’s operating system security features.</p>
+               <p>While no system can be guaranteed 100% secure, Rise minimizes risk by avoiding data collection altogether.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Third-Party Services</h3>
+               <p>Rise does not integrate third-party services that collect personal data, perform behavioral tracking, or serve advertising.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Your Choices and Control</h3>
+               <p className="mb-2">Because Rise does not collect personal data:</p>
+               <ul className="list-disc pl-5 mb-6 space-y-1 text-gray-600">
+                 <li>There is no personal data to access, export, or correct</li>
+                 <li>You can delete all app data at any time by deleting the app</li>
+                 <li>You control all recorded alarm sounds stored on your device</li>
+               </ul>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Changes to This Privacy Policy</h3>
+               <p>We may update this Privacy Policy if Rise’s functionality changes. Any updates will be posted on this page with a revised “Last updated” date.</p>
+
+               <h3 className="text-xl font-bold mt-8 mb-4">Contact Us</h3>
+               <p className="mb-4">If you have questions about this Privacy Policy, please contact us at:</p>
+               <p className="font-bold">Email: <a href="mailto:max@risealarm.app" className="text-[#FF6B00] hover:underline">max@risealarm.app</a></p>
+               <p className="font-bold">App Name: Rise</p>
+               <p className="font-bold">Website: <a href="https://risealarm.app" target="_blank" rel="noreferrer" className="text-[#FF6B00] hover:underline">risealarm.app</a></p>
+
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-6 text-[#FF6B00] uppercase tracking-wider text-sm border-b border-gray-200 pb-2">Warranty</h2>
+            <div className="prose prose-sm text-gray-600">
+               <p>Rise Alarm Pods come with a 1-year limited warranty against manufacturing defects. This does not cover water damage, accidental breakage, or loss.</p>
+            </div>
+          </section>
+
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
