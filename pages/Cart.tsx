@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Trash2, ShieldCheck, ArrowRight, Loader2, AlertCircle, ShoppingBag } from 'lucide-react';
 import { ThePod } from '../components/ui/DesignSystem';
-import { createCartWithItem } from '../lib/shopify';
+import { createCartWithItem, fetchProductByHandle } from '../lib/shopify';
 
 interface CartProps {
     onBack: () => void;
@@ -10,19 +10,33 @@ interface CartProps {
 }
 
 export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
-  // If no variant ID is passed, fallback to default (for demo purposes)
-  const [items, setItems] = useState([
-    { 
-        id: 1, 
-        name: 'Rise Alarm Starter Kit', 
-        batch: 'Batch 003 • Standard Edition', 
-        price: 25.00, 
-        quantity: 1,
-        variantId: cartVariantId || 'default_variant_id' 
-    }
-  ]);
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // Initialize Cart
+  useEffect(() => {
+    // Scenario 1: User clicked "Buy Now" and passed a Variant ID
+    if (cartVariantId) {
+        setItems([
+            { 
+                id: 1, 
+                name: 'Rise Alarm Starter Kit', 
+                batch: 'Batch 001 • Launch Edition', 
+                price: 25.00, 
+                quantity: 1,
+                variantId: cartVariantId 
+            }
+        ]);
+    } 
+    // Scenario 2: User clicked Cart Icon (Empty or fetch default?)
+    // For a single product store, we COULD fetch the default product here, 
+    // but standard behavior is showing an empty cart.
+    else {
+        setItems([]);
+    }
+  }, [cartVariantId]);
 
   const updateQuantity = (id: number, delta: number) => {
     setItems(items.map(item => {
@@ -46,38 +60,45 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
     setIsCheckingOut(true);
     setErrorMsg(null);
     
+    // Safety check
+    if (items.length === 0) return;
+
     const item = items[0];
 
-    if (item.variantId === 'default_variant_id') {
-        setErrorMsg("Demo Mode Active: Cannot checkout with placeholder product.");
-        setIsCheckingOut(false);
-        return;
-    }
-
-    // DER NEUE WEG: Ein Aufruf erstellt Cart + fügt Item hinzu + gibt URL zurück
+    // Create Cart & Checkout URL
     const cart = await createCartWithItem(item.variantId, item.quantity);
     
     if (!cart || !cart.checkoutUrl) {
-        setErrorMsg("Connection to Store failed. Check permissions (Storefront API) or Try again.");
+        setErrorMsg("Checkout currently unavailable. Please try again or contact support.");
         setIsCheckingOut(false);
         return;
     }
 
-    // Weiterleitung
+    // Redirect
     window.location.href = cart.checkoutUrl;
   };
 
+  // --- EMPTY STATE ---
   if (items.length === 0) {
       return (
-        <div className="min-h-screen bg-[#F9F9F7] pt-40 px-6 pb-24 text-center">
-             <h2 className="text-3xl font-bold mb-4">Your cart is empty.</h2>
-             <button onClick={onBack} className="text-[#FF6B00] font-bold hover:underline">Start Shopping</button>
+        <div className="min-h-screen bg-[#F9F9F7] pt-32 px-6 pb-24 flex flex-col items-center justify-center text-center">
+             <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center text-gray-400 mb-6">
+                <ShoppingBag size={32} />
+             </div>
+             <h2 className="text-3xl font-bold mb-4 text-[#111]">Your cart is empty.</h2>
+             <p className="text-gray-500 mb-8 max-w-md">Looks like you haven't added the Rise Pod yet. It's time to upgrade your mornings.</p>
+             <button 
+                onClick={onBack} 
+                className="px-8 py-4 bg-[#111] text-white rounded-full font-bold hover:bg-[#FF6B00] transition-colors shadow-lg"
+             >
+                Shop Now
+             </button>
         </div>
       );
   }
 
   return (
-    <div className="min-h-screen bg-[#F9F9F7] pt-40 px-6 pb-24">
+    <div className="min-h-screen bg-[#F9F9F7] pt-32 px-6 pb-24">
        <div className="max-w-4xl mx-auto">
             <button onClick={onBack} className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors">
                 <ArrowLeft size={16} /> Continue Shopping

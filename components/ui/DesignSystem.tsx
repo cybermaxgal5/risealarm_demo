@@ -196,6 +196,8 @@ export const ThePod = ({ scale = 1, className = "", highlight = 'none' }: { scal
           <img 
             src="/assets/RisePod.png" 
             alt="Rise Alarm Pod"
+            loading="lazy" 
+            decoding="async"
             className="w-full h-full object-contain drop-shadow-2xl"
           />
           <div className="absolute -bottom-[10%] left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/20 blur-xl rounded-[100%] transition-all duration-1000 group-hover:w-[60%] group-hover:bg-black/10"></div>

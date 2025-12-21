@@ -1,10 +1,10 @@
 
 import './index.css';
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, Loader2 } from 'lucide-react';
 
-// Modular Imports
+// Modular Imports - Keep Home sections eager for LCP (Largest Contentful Paint)
 import { Navbar } from './components/ui/Navbar';
 import { Hero } from './components/sections/Hero';
 import { ProblemSection } from './components/sections/Problem';
@@ -12,15 +12,25 @@ import { ComparisonSection } from './components/sections/Comparison';
 import { HomePricing } from './components/sections/HomePricing';
 import { TestimonialsSection } from './components/sections/Testimonials';
 
-// Pages
-import { AboutPage } from './pages/About';
-import { DownloadPage } from './pages/Download';
-import { SupportPage } from './pages/Support';
-import { SetupGuide } from './pages/Setup';
-import { HowItWorksPage } from './pages/HowItWorks';
-import { LegalHub } from './pages/StaticPages';
-import { ShopPage } from './pages/Shop';
-import { CartPage } from './pages/Cart';
+// Lazy Load Pages - Splits the bundle so users don't download Shop/Support code on homepage
+// NOTE: We handle Named Exports by mapping the module
+const AboutPage = React.lazy(() => import('./pages/About').then(module => ({ default: module.AboutPage })));
+const DownloadPage = React.lazy(() => import('./pages/Download').then(module => ({ default: module.DownloadPage })));
+const SupportPage = React.lazy(() => import('./pages/Support').then(module => ({ default: module.SupportPage })));
+const SetupGuide = React.lazy(() => import('./pages/Setup').then(module => ({ default: module.SetupGuide })));
+const HowItWorksPage = React.lazy(() => import('./pages/HowItWorks').then(module => ({ default: module.HowItWorksPage })));
+const LegalHub = React.lazy(() => import('./pages/StaticPages').then(module => ({ default: module.LegalHub })));
+const ShopPage = React.lazy(() => import('./pages/Shop').then(module => ({ default: module.ShopPage })));
+const CartPage = React.lazy(() => import('./pages/Cart').then(module => ({ default: module.CartPage })));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-[#F9F9F7]">
+    <div className="flex flex-col items-center gap-4">
+      <Loader2 className="animate-spin text-[#FF6B00]" size={48} />
+      <span className="font-mono text-xs uppercase tracking-widest text-gray-400 animate-pulse">Loading Rise...</span>
+    </div>
+  </div>
+);
 
 const App = () => {
   const [currentView, setCurrentView] = useState('home');
@@ -39,26 +49,33 @@ const App = () => {
   };
 
   const renderView = () => {
-    switch(currentView) {
-      case 'about': return <AboutPage />;
-      case 'download': return <DownloadPage />;
-      case 'support': return <SupportPage onNavigate={setCurrentView} />;
-      case 'setup': return <SetupGuide onBack={() => setCurrentView('support')} />;
-      case 'how-it-works': return <HowItWorksPage />;
-      case 'legal': return <LegalHub onBack={() => setCurrentView('home')} />;
-      case 'shop': return <ShopPage onAddToCart={addToCart} />;
-      case 'cart': return <CartPage onBack={() => setCurrentView('shop')} cartVariantId={selectedVariantId} />;
-      default: return (
-        <>
-          <Hero />
-          {/* Ticker removed */}
-          <ProblemSection />
-          <ComparisonSection />
-          <TestimonialsSection />
-          <HomePricing onBuy={() => setCurrentView('shop')} />
-        </>
-      );
-    }
+    // Suspense wrapper handles the loading state while the JS chunk is being fetched
+    return (
+      <Suspense fallback={<PageLoader />}>
+        {(() => {
+          switch(currentView) {
+            case 'about': return <AboutPage />;
+            case 'download': return <DownloadPage />;
+            case 'support': return <SupportPage onNavigate={setCurrentView} />;
+            case 'setup': return <SetupGuide onBack={() => setCurrentView('support')} />;
+            case 'how-it-works': return <HowItWorksPage />;
+            case 'legal': return <LegalHub onBack={() => setCurrentView('home')} />;
+            case 'shop': return <ShopPage onAddToCart={addToCart} />;
+            case 'cart': return <CartPage onBack={() => setCurrentView('shop')} cartVariantId={selectedVariantId} />;
+            default: return (
+              <>
+                <Hero />
+                {/* Ticker removed */}
+                <ProblemSection />
+                <ComparisonSection />
+                <TestimonialsSection />
+                <HomePricing onBuy={() => setCurrentView('shop')} />
+              </>
+            );
+          }
+        })()}
+      </Suspense>
+    );
   };
 
   return (

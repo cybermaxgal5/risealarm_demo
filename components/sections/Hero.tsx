@@ -13,6 +13,10 @@ export const Hero = () => {
             src="/assets/herobgrise.png" 
             alt="Rise Alarm Hero Background" 
             className="w-full h-full object-cover"
+            // @ts-ignore - fetchPriority is a valid React 19 / Modern HTML attribute
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
          />
          <div className="absolute inset-0 bg-white/40"></div>
       </div>
