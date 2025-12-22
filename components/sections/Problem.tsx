@@ -14,7 +14,7 @@ export const ProblemSection = () => {
              <span className="font-mono text-[#FF6B00] uppercase tracking-widest text-xs font-bold mb-4 block">The Struggle</span>
            </Reveal>
            <Reveal mode="mask" delay={200}>
-             <h2 className="text-4xl md:text-7xl font-bold mb-8 leading-tight">We All Fight the<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-600">Morning Battle.</span></h2>
+             <h2 className="text-4xl md:text-7xl font-bold mb-8 leading-tight">We All Fight the<br/><span className="text-white">Morning Battle.</span></h2>
            </Reveal>
            <Reveal mode="blur" delay={400}>
              <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">

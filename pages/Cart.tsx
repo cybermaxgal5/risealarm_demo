@@ -22,8 +22,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
         setItems([
             { 
                 id: 1, 
-                name: 'Rise Alarm Starter Kit', 
-                batch: 'Batch 001 • Launch Edition', 
+                name: 'Rise Pod', 
                 price: 25.00, 
                 quantity: 1,
                 variantId: cartVariantId 
@@ -78,6 +77,10 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
     window.location.href = cart.checkoutUrl;
   };
 
+  const formatPrice = (val: number) => {
+      return val.toFixed(0);
+  };
+
   // --- EMPTY STATE ---
   if (items.length === 0) {
       return (
@@ -124,8 +127,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
                                         <Trash2 size={18} />
                                     </button>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-6">{item.batch}</p>
-                                <div className="flex justify-between items-center">
+                                <div className="flex justify-between items-center mt-6">
                                     <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1 border border-gray-100">
                                         <button 
                                             onClick={() => updateQuantity(item.id, -1)}
@@ -137,7 +139,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
                                             className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black rounded-md transition-colors font-bold"
                                         >+</button>
                                     </div>
-                                    <div className="font-bold text-lg">${(item.price * item.quantity).toFixed(2)}</div>
+                                    <div className="font-bold text-lg">${formatPrice(item.price * item.quantity)}</div>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +153,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
                         <div className="space-y-4 text-sm mb-8">
                             <div className="flex justify-between text-gray-600">
                                 <span>Subtotal</span>
-                                <span>${subtotal.toFixed(2)}</span>
+                                <span>${formatPrice(subtotal)}</span>
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Shipping</span>
@@ -163,7 +165,7 @@ export const CartPage = ({ onBack, cartVariantId }: CartProps) => {
                             </div>
                             <div className="border-t border-gray-100 pt-4 flex justify-between font-bold text-xl">
                                 <span>Total</span>
-                                <span>${total.toFixed(2)}</span>
+                                <span>${formatPrice(total)}</span>
                             </div>
                         </div>
                         

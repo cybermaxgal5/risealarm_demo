@@ -86,7 +86,7 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                    <div className="space-y-4 mb-8 text-sm text-gray-400">
                       <div className="flex justify-between">
                          <span>Item Subtotal</span>
-                         <span className="text-white">${selectedPack === 'pod' ? '25.00' : '0.00'}</span>
+                         <span className="text-white">${selectedPack === 'pod' ? '25' : '0'}</span>
                       </div>
                       <div className="flex justify-between">
                          <span>Shipping</span>
@@ -95,7 +95,7 @@ export const PreOrderSection = ({ onCheckout }: { onCheckout?: () => void }) => 
                       <div className="h-[1px] bg-white/10 my-4"></div>
                       <div className="flex justify-between text-lg font-bold text-white">
                          <span>Total</span>
-                         <span>${selectedPack === 'pod' ? '25.00' : '0.00'}</span>
+                         <span>${selectedPack === 'pod' ? '25' : '0'}</span>
                       </div>
                    </div>
                    <button 

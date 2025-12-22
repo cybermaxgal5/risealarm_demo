@@ -46,6 +46,11 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
      onAddToCart(product?.id);
   };
 
+  const formatPrice = (price?: string) => {
+      if (!price) return "0";
+      return parseFloat(price).toFixed(0);
+  };
+
   return (
     <div className="min-h-screen bg-[#F9F9F7] pt-28 md:pt-32 pb-24 px-4 md:px-6">
        <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-center">
@@ -83,8 +88,8 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
 
              <Reveal delay={300}>
                  <div className="flex items-baseline gap-4 mb-8">
-                    <span className="text-3xl font-bold text-[#FF6B00]">${product?.price}</span>
-                    <span className="text-xl text-gray-400 line-through decoration-1">${product?.compareAtPrice}</span>
+                    <span className="text-3xl font-bold text-[#FF6B00]">${formatPrice(product?.price)}</span>
+                    <span className="text-xl text-gray-400 line-through decoration-1">${formatPrice(product?.compareAtPrice)}</span>
                     <span className="text-xs font-bold bg-[#FF6B00]/10 text-[#FF6B00] px-2 py-1 rounded animate-pulse">50% OFF</span>
                  </div>
              </Reveal>
@@ -115,7 +120,7 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                     disabled={!product?.available}
                     className="w-full py-4 md:py-5 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {loading ? "Loading..." : (product?.available ? `Pre-Order Now — $${product?.price}` : "Sold Out")}
+                    {loading ? "Loading..." : (product?.available ? `Pre-Order Now — $${formatPrice(product?.price)}` : "Sold Out")}
                     <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform"/>
                 </ShinyButton>
              </Reveal>

@@ -47,7 +47,7 @@ export const ProtocolSection = () => {
     { 
       id: "01", 
       title: "Set Your Alarm", 
-      desc: "Choose your wake-up time, sound, and days inside the Rise Alarm app.",
+      desc: "Choose your wake-up time, sound, and days inside the Rise app.",
       icon: Smartphone 
     },
     { 
