@@ -59,7 +59,12 @@ const App = () => {
             case 'support': return <SupportPage onNavigate={setCurrentView} />;
             case 'setup': return <SetupGuide onBack={() => setCurrentView('support')} />;
             case 'how-it-works': return <HowItWorksPage />;
+            
+            // Handle split legal views
+            case 'terms': return <LegalHub onBack={() => setCurrentView('home')} section="terms" />;
+            case 'privacy': return <LegalHub onBack={() => setCurrentView('home')} section="privacy" />;
             case 'legal': return <LegalHub onBack={() => setCurrentView('home')} />;
+            
             case 'shop': return <ShopPage onAddToCart={addToCart} />;
             case 'cart': return <CartPage onBack={() => setCurrentView('shop')} cartVariantId={selectedVariantId} />;
             default: return (
@@ -101,7 +106,8 @@ const App = () => {
                  
                  <div className="flex gap-8 mb-6 md:mb-0">
                     <button onClick={() => setCurrentView('support')} className="hover:text-white transition-colors">Help</button>
-                    <button onClick={() => setCurrentView('legal')} className="hover:text-white transition-colors">Legal & Privacy</button>
+                    <button onClick={() => setCurrentView('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+                    <button onClick={() => setCurrentView('terms')} className="hover:text-white transition-colors">Terms of Service</button>
                  </div>
                  
                  <div className="flex gap-6 items-center">
