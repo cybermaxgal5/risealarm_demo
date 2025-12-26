@@ -103,7 +103,7 @@ export const CartPage = ({ cartVariantId }: CartProps) => {
   return (
     <div className="min-h-screen bg-[#F9F9F7] pt-32 px-6 pb-24">
        <div className="max-w-4xl mx-auto">
-            <Link to="/shop" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors">
+            <Link to="/shop" aria-label="Continue shopping" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-[#FF6B00] mb-12 transition-colors">
                 <ArrowLeft size={16} /> Continue Shopping
             </Link>
 
@@ -123,7 +123,7 @@ export const CartPage = ({ cartVariantId }: CartProps) => {
                             <div className="flex-grow w-full">
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="font-bold text-lg">{item.name}</h3>
-                                    <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500 transition-colors">
+                                    <button onClick={() => removeItem(item.id)} aria-label={`Remove ${item.name}`} className="text-gray-400 hover:text-red-500 transition-colors">
                                         <Trash2 size={18} />
                                     </button>
                                 </div>
@@ -131,11 +131,13 @@ export const CartPage = ({ cartVariantId }: CartProps) => {
                                     <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1 border border-gray-100">
                                         <button 
                                             onClick={() => updateQuantity(item.id, -1)}
+                                            aria-label="Decrease quantity"
                                             className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black rounded-md transition-colors font-bold"
                                         >-</button>
                                         <span className="font-bold text-sm w-4 text-center">{item.quantity}</span>
                                         <button 
                                             onClick={() => updateQuantity(item.id, 1)}
+                                            aria-label="Increase quantity"
                                             className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-white hover:text-black rounded-md transition-colors font-bold"
                                         >+</button>
                                     </div>
