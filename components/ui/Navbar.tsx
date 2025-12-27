@@ -98,6 +98,7 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
                        
                        <Link 
                           to="/cart"
+                          aria-label="View Cart"
                           className="relative w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#111] hover:text-[#FF6B00] transition-all duration-300 border border-gray-100 shadow-md group active:scale-95"
                        >
                           <ShoppingBag size={18} className="group-hover:scale-110 transition-transform" />
@@ -112,6 +113,7 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
 
                <button 
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                   className="md:hidden w-9 h-9 bg-gray-50 rounded-full flex items-center justify-center text-[#111] border border-gray-200 shadow-sm active:scale-90 transition-transform"
                >
                   {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
