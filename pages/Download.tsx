@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Loader2, Check } from 'lucide-react';
 import { Reveal } from '../components/ui/DesignSystem';
 
 // Added responsive sizing classes to PhoneMockup
@@ -30,6 +30,22 @@ const PhoneMockup = ({ src, delay = 0, className = "" }: { src: string, delay?: 
 );
 
 export const DownloadPage = () => {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus('loading');
+
+    // Simulate API call
+    setTimeout(() => {
+        setStatus('success');
+        setEmail('');
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen bg-[#F9F9F7] text-[#111] pt-32 pb-24 relative overflow-hidden">
        {/* Background Noise */}
@@ -82,19 +98,46 @@ export const DownloadPage = () => {
 
              {/* Waitlist Input */}
              <Reveal delay={400} mode="blur">
-                 <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-lg max-w-md">
-                     <h3 className="font-bold text-[#111] mb-2">Don't miss the launch.</h3>
-                     <p className="text-sm text-gray-500 mb-4">Join the waitlist to get notified when the app goes live.</p>
-                     <form className="flex gap-2">
-                        <input 
-                          type="email" 
-                          placeholder="Enter your email" 
-                          className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF6B00] transition-colors"
-                        />
-                        <button type="submit" className="bg-[#FF6B00] text-white px-4 py-3 rounded-xl font-bold hover:bg-[#e05e00] transition-colors flex items-center justify-center">
-                           <ArrowRight size={18} />
-                        </button>
-                     </form>
+                 <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-lg max-w-md transition-all duration-300">
+                     {status === 'success' ? (
+                        <div className="flex flex-col items-center justify-center text-center py-4 animate-in fade-in duration-500">
+                           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-3">
+                              <Check size={24} />
+                           </div>
+                           <h3 className="font-bold text-[#111]">You're on the list!</h3>
+                           <p className="text-sm text-gray-500">We'll let you know as soon as we launch.</p>
+                           <button
+                             onClick={() => setStatus('idle')}
+                             className="mt-4 text-sm font-bold text-[#FF6B00] hover:underline"
+                           >
+                             Add another email
+                           </button>
+                        </div>
+                     ) : (
+                        <>
+                           <h3 className="font-bold text-[#111] mb-2">Don't miss the launch.</h3>
+                           <p className="text-sm text-gray-500 mb-4">Join the waitlist to get notified when the app goes live.</p>
+                           <form onSubmit={handleSubmit} className="flex gap-2">
+                              <input
+                                type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email"
+                                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FF6B00] transition-colors disabled:opacity-50"
+                                disabled={status === 'loading'}
+                              />
+                              <button
+                                type="submit"
+                                disabled={status === 'loading'}
+                                aria-label="Join waitlist"
+                                className="bg-[#FF6B00] text-white px-4 py-3 rounded-xl font-bold hover:bg-[#e05e00] transition-colors flex items-center justify-center disabled:opacity-70 disabled:cursor-wait min-w-[3.5rem]"
+                              >
+                                 {status === 'loading' ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
+                              </button>
+                           </form>
+                        </>
+                     )}
                  </div>
              </Reveal>
           </div>
