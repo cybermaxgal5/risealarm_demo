@@ -1,4 +1,3 @@
-
 {
   "name": "rise-alarm-app",
   "private": true,
@@ -10,11 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lucide-react": "^0.344.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "lucide-react": "^0.344.0",
-    "shopify-buy": "^2.21.1",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "shopify-buy": "^2.21.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",
