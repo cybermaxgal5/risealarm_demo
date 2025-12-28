@@ -159,7 +159,7 @@ export const CartPage = ({ cartVariantId }: CartProps) => {
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Shipping</span>
-                                <span className="text-green-600 font-bold">Free</span>
+                                <span>Calculated at checkout</span>
                             </div>
                             <div className="flex justify-between text-gray-600">
                                 <span>Tax</span>
