@@ -179,7 +179,7 @@ export const SectionTag = ({ text }: { text: string }) => (
 );
 
 // --- VISUAL ASSETS (RESPONSIVE POD) ---
-export const ThePod = ({ scale = 1, className = "", highlight = 'none' }: { scale?: number, className?: string, highlight?: string }) => {
+export const ThePod = ({ scale = 1, className = "", highlight = 'none', priority = false }: { scale?: number, className?: string, highlight?: string, priority?: boolean }) => {
   return (
     <div 
       className={`relative group perspective-1000 mx-auto ${className}`}
@@ -196,8 +196,13 @@ export const ThePod = ({ scale = 1, className = "", highlight = 'none' }: { scal
           <img 
             src="/assets/RisePod.png" 
             alt="Rise Alarm Pod"
-            loading="lazy" 
-            decoding="async"
+            // Performance: Eager load above-fold image (Hero) for better LCP
+            loading={priority ? "eager" : "lazy"}
+            // @ts-ignore - fetchPriority is standard now but React types might lag behind
+            fetchPriority={priority ? "high" : "auto"}
+            decoding={priority ? "auto" : "async"}
+            width={1024}
+            height={1024}
             className="w-full h-full object-contain drop-shadow-2xl"
           />
           <div className="absolute -bottom-[10%] left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/20 blur-xl rounded-[100%] transition-all duration-1000 group-hover:w-[60%] group-hover:bg-black/10"></div>

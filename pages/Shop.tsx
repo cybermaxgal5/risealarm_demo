@@ -64,7 +64,8 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                     <div className="bg-[#E5E5E2] rounded-[2.5rem] h-[40vh] md:h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden border border-gray-200 shadow-inner group">
                         <div className="absolute inset-0 opacity-40 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
                         <div className="w-[80%] md:w-full flex justify-center">
-                             <ThePod scale={2} />
+                             {/* Priority load for Hero image to improve LCP */}
+                             <ThePod scale={2} priority={true} />
                         </div>
                     </div>
                 </TiltCard>
