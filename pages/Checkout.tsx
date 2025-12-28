@@ -72,7 +72,7 @@ export const CheckoutPage = () => {
                 </div>
                 <div className="flex justify-between">
                    <span className="text-gray-500">Shipping</span>
-                   <span>Free</span>
+                   <span>Calculated at checkout</span>
                 </div>
                 <div className="flex justify-between font-bold text-xl pt-4 border-t border-gray-100">
                    <span>Total</span>
