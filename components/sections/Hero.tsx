@@ -58,7 +58,7 @@ export const Hero = ({ onPreOrder }: { onPreOrder?: () => void }) => {
                 <img
                   src="/assets/RisePod.png"
                   alt="Rise Pod - NFC Alarm Device"
-                  className="relative w-48 h-auto object-contain drop-shadow-2xl"
+                  className="relative w-64 h-auto object-contain drop-shadow-2xl"
                   loading="eager"
                 />
               </div>
