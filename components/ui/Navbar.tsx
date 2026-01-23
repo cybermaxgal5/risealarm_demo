@@ -93,7 +93,7 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
                   to="/shop"
                   className="bg-[#111] text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-[#FF6B00] transition-all duration-300 shadow-lg hover:shadow-[#FF6B00]/30 hover:-translate-y-0.5"
                 >
-                  Pre-Order
+                  Order
                 </Link>
 
                 <Link
