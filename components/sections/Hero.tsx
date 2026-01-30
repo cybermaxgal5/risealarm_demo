@@ -29,17 +29,12 @@ export const Hero = ({ onOrder }: { onOrder?: () => void }) => {
           <div className="mb-6 lg:mb-8 font-bold tracking-[-0.04em] leading-[0.9]">
             <Reveal mode="mask" delay={100}>
               <div className="text-[14vw] sm:text-[10vw] lg:text-[4.5rem] xl:text-[5.5rem] text-[#0A0A0A]">
-                <TextReveal text="WAKE UP." delay={0.2} />
+                <TextReveal text="WAKE UP!" delay={0.2} />
               </div>
             </Reveal>
             <Reveal mode="mask" delay={175}>
               <div className="text-[14vw] sm:text-[10vw] lg:text-[4.5rem] xl:text-[5.5rem] text-[#0A0A0A]">
-                <TextReveal text="TAP IN." delay={0.4} />
-              </div>
-            </Reveal>
-            <Reveal mode="mask" delay={250}>
-              <div className="text-[14vw] sm:text-[10vw] lg:text-[4.5rem] xl:text-[5.5rem] text-[#FF6B00]">
-                <TextReveal text="START DAY." delay={0.6} />
+                <TextReveal text="TAP IN!" delay={0.4} />
               </div>
             </Reveal>
           </div>
