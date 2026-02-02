@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Check, ShieldCheck, ArrowRight, Star } from 'lucide-react';
 import { ThePod, Reveal, TextReveal, ShinyButton, TiltCard } from '../components/ui/DesignSystem';
-import { fetchProductByHandle } from '../lib/shopify';
+import { fetchProductByHandle, fetchAllProducts } from '../lib/shopify';
 
 // Default Fallback Data (falls Shopify noch nicht verbunden ist)
 const DEFAULT_PRODUCT = {
@@ -20,22 +20,33 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
     // Lade Produkt von Shopify beim Start
     useEffect(() => {
         const loadData = async () => {
-            // HIER DEN GENAUEN HANDLE VOM KUNDEN EINTRAGEN: 'rise-pod'
-            const shopifyProduct = await fetchProductByHandle('rise-pod');
+            // Try to fetch by handle first
+            let shopifyProduct = await fetchProductByHandle('rise-pod');
 
-            if (shopifyProduct) {
+            // If not found, try to fetch all products and use the first one
+            if (!shopifyProduct) {
+                console.log("Product with handle 'rise-pod' not found. Fetching all products...");
+                const allProducts = await fetchAllProducts();
+                if (allProducts && allProducts.length > 0) {
+                    shopifyProduct = allProducts[0];
+                    console.log(`Found product: "${shopifyProduct.title}" with handle: "${shopifyProduct.handle}"`);
+                    console.log("Available products:", allProducts.map((p: any) => ({ title: p.title, handle: p.handle })));
+                }
+            }
+
+            if (shopifyProduct && shopifyProduct.variants && shopifyProduct.variants.length > 0) {
                 const variant = shopifyProduct.variants[0];
                 setProduct({
                     title: shopifyProduct.title,
                     // Nimm die erste Variante (meistens gibt es nur eine beim Pod)
                     price: variant?.price?.amount || "25.00",
                     compareAtPrice: "50.00", // Manuell setzen oder aus Shopify Metafields holen
-                    id: variant?.id, // WICHTIG für den Checkout
+                    id: variant?.id, // WICHTIG für den Checkout - must be valid Shopify variant ID
                     // Cast to any because typescript definition for shopify-buy might be missing 'available' or it is named 'availableForSale'
                     available: (variant as any)?.available ?? (variant as any)?.availableForSale ?? true
                 });
             } else {
-                console.log("Produkt nicht gefunden, lade Fallback");
+                console.error("No products found in Shopify. Using fallback data.");
                 setProduct(DEFAULT_PRODUCT);
             }
             setLoading(false);

@@ -64,10 +64,24 @@ export const CartPage = ({ cartVariantId }: CartProps) => {
 
     const item = items[0];
 
+    // Validate variant ID format (Shopify variant IDs are typically in format "gid://shopify/ProductVariant/...")
+    if (!item.variantId || item.variantId === 'default_id') {
+        setErrorMsg("Invalid product. Please go back to the shop and try again.");
+        setIsCheckingOut(false);
+        return;
+    }
+
     // Create Cart & Checkout URL
     const cart = await createCartWithItem(item.variantId, item.quantity);
     
-    if (!cart || !cart.checkoutUrl) {
+    if (!cart || cart.error) {
+        const errorMessage = cart?.error || "Checkout currently unavailable. The product may have been updated. Please go back to the shop and try again.";
+        setErrorMsg(errorMessage);
+        setIsCheckingOut(false);
+        return;
+    }
+
+    if (!cart.checkoutUrl) {
         setErrorMsg("Checkout currently unavailable. Please try again or contact support.");
         setIsCheckingOut(false);
         return;

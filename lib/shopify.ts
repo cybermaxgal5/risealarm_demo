@@ -59,18 +59,19 @@ export const createCartWithItem = async (variantId: string, quantity: number) =>
     
     if (errors) {
       console.error("GraphQL Errors:", errors);
-      return null;
+      return { error: errors[0]?.message || "Failed to create cart" };
     }
 
     if (data?.cartCreate?.userErrors?.length > 0) {
+      const errorMessage = data.cartCreate.userErrors[0]?.message || "Invalid product variant";
       console.error("Cart User Errors:", data.cartCreate.userErrors);
-      return null;
+      return { error: errorMessage };
     }
 
     return data.cartCreate.cart; // Gibt { id, checkoutUrl } zurück
   } catch (e) {
     console.error("Network Error:", e);
-    return null;
+    return { error: "Network error. Please check your connection." };
   }
 };
 
@@ -80,6 +81,16 @@ export const fetchProductByHandle = async (handle: string) => {
     return await client.product.fetchByHandle(handle);
   } catch (e) {
     console.error("Shopify Product Error:", e);
+    return null;
+  }
+};
+
+// Helper function to fetch all products - useful for finding the correct handle
+export const fetchAllProducts = async () => {
+  try {
+    return await client.product.fetchAll();
+  } catch (e) {
+    console.error("Shopify Fetch All Products Error:", e);
     return null;
   }
 };
