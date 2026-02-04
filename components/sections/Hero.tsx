@@ -3,6 +3,8 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Reveal, TextReveal, ShinyButton } from '../ui/DesignSystem';
 
+const FEATURED_VIDEO_URL = "https://www.youtube.com/embed/VIDEO_ID_HERE"; // Replace VIDEO_ID_HERE with your news clip ID
+
 export const Hero = ({ onOrder }: { onOrder?: () => void }) => {
   return (
     <section className="relative min-h-[100dvh] w-full flex items-center overflow-hidden bg-[#F9F9F7] pt-24 md:pt-0">
@@ -78,7 +80,24 @@ export const Hero = ({ onOrder }: { onOrder?: () => void }) => {
           </Reveal>
         </div>
 
-        <div className="hidden lg:block"></div>
+        <div className="hidden lg:flex items-center justify-center">
+          <Reveal mode="blur" delay={400}>
+            <div className="w-full max-w-md aspect-video rounded-[1.75rem] overflow-hidden border border-black/5 bg-black relative shadow-2xl shadow-black/20">
+              <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-gray-800 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
+                Featured on
+              </div>
+              <iframe
+                src={FEATURED_VIDEO_URL}
+                title="Rise Alarm on the News"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
