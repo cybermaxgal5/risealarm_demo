@@ -42,10 +42,56 @@ const ScrollToTop = () => {
   return null;
 }
 
+const FeaturedNews = () => (
+  <section className="bg-[#F9F9F7] px-6 pb-16">
+    <div className="max-w-[1200px] mx-auto">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="text-[0.65rem] font-mono uppercase tracking-[0.25em] text-gray-500">Featured on</span>
+          <div className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm">
+            <div className="h-8 w-20 rounded-md bg-[#003366] flex items-center justify-center text-white text-xs font-extrabold tracking-tight">
+              WATE 6
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-[0.7rem] font-semibold text-gray-800 uppercase tracking-[0.18em]">Knoxville</span>
+              <span className="text-[0.65rem] text-gray-500 uppercase tracking-[0.18em]">News Station</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-black/95 border border-black/20 aspect-video flex items-center justify-center">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#ffffff22,transparent_55%),radial-gradient(circle_at_bottom,#FF6B0022,transparent_55%)] opacity-60" />
+          <div className="relative z-10 flex flex-col items-center gap-3 text-center px-6">
+            <div className="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center text-white/90 mb-1">
+              <span className="text-xs font-semibold tracking-[0.18em] uppercase">Play</span>
+            </div>
+            <p className="text-sm md:text-base text-white/80 max-w-md">
+              News segment from WATE Knoxville will appear here. We&apos;ll embed the video directly so it auto-plays once it&apos;s ready.
+            </p>
+          </div>
+          {/* To embed for real later:
+            <video
+              src="/path-to-your-news-clip.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          */}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 // Wrapper for Home Page Sections
 const HomePage = ({ onBuy }: { onBuy: () => void }) => (
   <>
     <Hero onOrder={onBuy} />
+    <FeaturedNews />
     <ProblemSection />
     <ComparisonSection />
     <TestimonialsSection />

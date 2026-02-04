@@ -32,16 +32,22 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
 
   return (
     <>
-      <div className="fixed top-3 md:top-4 left-0 w-full z-50 flex justify-center pointer-events-none">
+      <div className="fixed top-0 left-0 w-full z-50">
+        {/* Top announcement stripe */}
+        <div className="h-7 bg-[#FF6B00] text-white text-[10px] font-mono uppercase tracking-[0.3em] overflow-hidden flex items-center">
+          <div className="animate-marquee whitespace-nowrap flex gap-8 px-6">
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <span key={idx} className="opacity-90">
+                App Version 1.4 coming soon
+              </span>
+            ))}
+          </div>
+        </div>
+
         <nav
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className={`
-             pointer-events-auto
-             transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.25,1)]
-             ${isExpanded ? 'w-[calc(100%-24px)] md:w-[1100px] bg-white/70 border-white/50 py-2 md:py-2.5' : 'w-[calc(100%-24px)] md:w-[500px] bg-white/90 border-white/80 py-2 md:py-2'}
-             shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] backdrop-blur-2xl border rounded-full px-4 md:px-5 flex justify-between items-center relative z-50
-           `}
+          className="pointer-events-auto bg-[#F9F9F7]/95 border-b border-gray-200 px-4 md:px-6 py-3 flex justify-between items-center shadow-sm backdrop-blur"
         >
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
