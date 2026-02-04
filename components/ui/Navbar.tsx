@@ -29,31 +29,57 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
   }, [location.pathname]);
 
   const isExpanded = !scrolled || hovered || mobileMenuOpen;
+  const isFloating = scrolled && !mobileMenuOpen;
 
   return (
     <>
-      <div className="w-full z-50">
-        {/* Top announcement stripe */}
+      {/* Top announcement stripe (static, scrolls away with page) */}
+      <div className="w-full">
         <div className="h-9 bg-[#FF6B00] text-white text-[11px] font-mono uppercase tracking-[0.35em] overflow-hidden flex items-center">
-          <div className="animate-marquee whitespace-nowrap flex px-8">
-            {Array.from({ length: 8 }).map((_, idx) => (
-              <span key={idx} className="mx-6 opacity-90">
-                App Version 1.4 coming soon&nbsp;•&nbsp;
-              </span>
+          <div className="animate-marquee whitespace-nowrap inline-flex items-center px-8">
+            {Array.from({ length: 10 }).map((_, idx) => (
+              <React.Fragment key={idx}>
+                <span className="mx-4 opacity-90">App Version 1.4 coming soon</span>
+                <span className="mx-4 text-white/80">•</span>
+              </React.Fragment>
             ))}
           </div>
         </div>
+      </div>
 
+      {/* Nav: full-width at top, floating bubble when scrolled */}
+      <div
+        className={
+          isFloating
+            ? "fixed top-3 md:top-4 left-0 w-full z-40 flex justify-center pointer-events-none"
+            : "w-full z-40"
+        }
+      >
         <nav
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          className="pointer-events-auto bg-[#F9F9F7]/95 border-b border-gray-200 px-4 md:px-6 py-3 flex justify-between items-center shadow-sm backdrop-blur"
+          className={
+            isFloating
+              ? `
+                pointer-events-auto
+                transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.25,1)]
+                ${isExpanded
+                  ? "w-[calc(100%-24px)] md:w-[1100px] bg-white/80 border-white/60 py-2 md:py-2.5"
+                  : "w-[calc(100%-24px)] md:w-[520px] bg-white/90 border-white/80 py-2 md:py-2"}
+                shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] backdrop-blur-2xl border rounded-full px-4 md:px-5 flex justify-between items-center
+              `
+              : "mx-auto max-w-[1200px] px-4 md:px-6 py-3 flex justify-between items-center border-b border-gray-200 bg-[#F9F9F7]/95"
+          }
         >
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
             <Link to="/" className="flex items-center gap-2 md:gap-3 cursor-pointer group shrink-0">
-              <img src="/assets/ralogo.webp" alt="Rise Alarm Logo" className="h-6 md:h-8 w-auto object-contain transition-transform duration-500 group-hover:rotate-12" />
-              <span className={`font-bold text-sm md:text-base tracking-tight text-[#111] transition-all duration-500 opacity-100 translate-x-0 ${isExpanded ? 'md:opacity-100 md:translate-x-0' : 'md:opacity-100 md:translate-x-0'}`}>
+              <img
+                src="/assets/ralogo.webp"
+                alt="Rise Alarm Logo"
+                className="h-6 md:h-8 w-auto object-contain transition-transform duration-500 group-hover:rotate-12"
+              />
+              <span className="font-bold text-sm md:text-base tracking-tight text-[#111] transition-all duration-500">
                 Rise
               </span>
             </Link>
@@ -63,14 +89,14 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
           <div className="hidden md:flex flex-0 shrink-0 justify-center">
             <div
               className={`
-                    flex items-center gap-8 text-sm font-bold text-gray-600 uppercase tracking-widest transition-all duration-700 overflow-hidden
-                    ${isExpanded ? 'opacity-100 max-w-[500px] px-4' : 'opacity-0 max-w-0 px-0'}
-                  `}
+                flex items-center gap-8 text-sm font-bold text-gray-600 uppercase tracking-widest transition-all duration-700 overflow-hidden
+                ${isFloating ? (isExpanded ? "opacity-100 max-w-[500px] px-4" : "opacity-0 max-w-0 px-0") : "opacity-100 max-w-[500px] px-4"}
+              `}
             >
               {[
-                { path: '/how-it-works', label: 'How It Works' },
-                { path: '/about', label: 'About' },
-                { path: '/support', label: 'Support' }
+                { path: "/how-it-works", label: "How It Works" },
+                { path: "/about", label: "About" },
+                { path: "/support", label: "Support" },
               ].map((item) => (
                 <Link
                   key={item.path}
@@ -89,7 +115,9 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
             <div className="hidden md:flex items-center gap-3">
               <Link
                 to="/download"
-                className={`bg-gray-100 text-[#111] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors ${!isExpanded ? 'hidden' : ''}`}
+                className={`bg-gray-100 text-[#111] px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors ${
+                  isFloating && !isExpanded ? "hidden" : ""
+                }`}
               >
                 App
               </Link>
