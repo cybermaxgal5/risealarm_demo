@@ -33,13 +33,16 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
   return (
     <>
       <div className="fixed top-0 left-0 w-full z-50">
+        {/* Safe area spacer so iOS Safari status bar doesn't pick up the orange */}
+        <div className="bg-[#F9F9F7]" style={{ height: 'env(safe-area-inset-top)' }} />
+
         {/* Top announcement stripe */}
         <div className="h-9 bg-[#FF6B00] text-white text-[11px] font-mono uppercase tracking-[0.35em] overflow-hidden flex items-center">
           <div className="animate-marquee whitespace-nowrap flex gap-10 px-8">
             {Array.from({ length: 10 }).map((_, idx) => (
-              <span key={idx} className="flex items-center gap-3 opacity-90">
+              <span key={idx} className="inline-flex items-center opacity-90">
                 <span>App Version 1.4 coming soon</span>
-                <span className="text-white/80">•</span>
+                <span className="mx-4 text-white/80">•</span>
               </span>
             ))}
           </div>

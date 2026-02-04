@@ -48,25 +48,12 @@ const FeaturedNews = () => (
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center gap-4">
           <span className="text-[0.65rem] font-mono uppercase tracking-[0.25em] text-gray-500">Featured on</span>
-          <div className="flex flex-wrap items-center gap-4">
-            {/* Drop your logo files into /public/assets with these names */}
-            <div className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm">
-              <img
-                src="/assets/wate-6-logo-square.png"
-                alt="WATE 6 ABC"
-                className="h-8 w-8 md:h-10 md:w-10 object-contain"
-              />
-              <span className="text-[0.7rem] md:text-xs font-semibold text-gray-800 uppercase tracking-[0.18em]">
-                Knoxville
-              </span>
-            </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm">
-              <img
-                src="/assets/wate-6-news-on-your-side.png"
-                alt="6 News On Your Side"
-                className="h-7 md:h-8 w-auto object-contain"
-              />
-            </div>
+          <div className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm">
+            <img
+              src="/assets/WATE.png"
+              alt="WATE 6 News"
+              className="h-8 md:h-10 w-auto object-contain"
+            />
           </div>
         </div>
       </div>
