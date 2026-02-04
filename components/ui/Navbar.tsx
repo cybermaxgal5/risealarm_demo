@@ -34,11 +34,12 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
     <>
       <div className="fixed top-0 left-0 w-full z-50">
         {/* Top announcement stripe */}
-        <div className="h-9 bg-[#111111] text-white text-[11px] font-mono uppercase tracking-[0.35em] overflow-hidden flex items-center">
+        <div className="h-9 bg-[#FF6B00] text-white text-[11px] font-mono uppercase tracking-[0.35em] overflow-hidden flex items-center">
           <div className="animate-marquee whitespace-nowrap flex gap-10 px-8">
             {Array.from({ length: 10 }).map((_, idx) => (
-              <span key={idx} className="opacity-90">
-                App Version 1.4 coming soon •
+              <span key={idx} className="flex items-center gap-3 opacity-90">
+                <span>App Version 1.4 coming soon</span>
+                <span className="text-white/80">•</span>
               </span>
             ))}
           </div>
