@@ -94,7 +94,6 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
               `}
             >
               {[
-                { path: "/how-it-works", label: "How It Works" },
                 { path: "/about", label: "About" },
                 { path: "/support", label: "Support" },
               ].map((item) => (
@@ -163,7 +162,6 @@ export const Navbar = ({ cartCount }: { cartCount: number }) => {
         <div className="flex flex-col items-center gap-6 text-center">
           {[
             { path: '/', label: 'Home' },
-            { path: '/how-it-works', label: 'How It Works' },
             { path: '/about', label: 'About' },
             { path: '/shop', label: 'Shop' },
             { path: '/support', label: 'Support' },

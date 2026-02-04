@@ -8,8 +8,7 @@ import { Instagram, Linkedin, Loader2 } from 'lucide-react';
 // Modular Imports
 import { Navbar } from './components/ui/Navbar';
 import { Hero } from './components/sections/Hero';
-import { ProblemSection } from './components/sections/Problem';
-import { ComparisonSection } from './components/sections/Comparison';
+import { ProtocolSection } from './components/sections/Protocol';
 import { HomePricing } from './components/sections/HomePricing';
 import { TestimonialsSection } from './components/sections/Testimonials';
 
@@ -18,7 +17,6 @@ const AboutPage = React.lazy(() => import('./pages/About').then(module => ({ def
 const DownloadPage = React.lazy(() => import('./pages/Download').then(module => ({ default: module.DownloadPage })));
 const SupportPage = React.lazy(() => import('./pages/Support').then(module => ({ default: module.SupportPage })));
 const SetupGuide = React.lazy(() => import('./pages/Setup').then(module => ({ default: module.SetupGuide })));
-const HowItWorksPage = React.lazy(() => import('./pages/HowItWorks').then(module => ({ default: module.HowItWorksPage })));
 const LegalHub = React.lazy(() => import('./pages/StaticPages').then(module => ({ default: module.LegalHub })));
 const ShopPage = React.lazy(() => import('./pages/Shop').then(module => ({ default: module.ShopPage })));
 const CartPage = React.lazy(() => import('./pages/Cart').then(module => ({ default: module.CartPage })));
@@ -121,8 +119,7 @@ const HomePage = ({ onBuy }: { onBuy: () => void }) => (
     <Hero onOrder={onBuy} />
     <div className="w-full border-t border-gray-200 my-8 md:my-12"></div>
     <FeaturedNews />
-    <ProblemSection />
-    <ComparisonSection />
+    <ProtocolSection />
     <TestimonialsSection />
     <HomePricing onBuy={onBuy} />
   </>
@@ -170,7 +167,6 @@ const AppContent = ({ cartCount, setCartCount, selectedVariantId, setSelectedVar
             <Route path="/" element={<HomePage onBuy={() => navigate('/shop')} />} />
 
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/how-it-works" element={<HowItWorksPage />} />
             <Route path="/download" element={<DownloadPage />} />
 
             <Route path="/support" element={<SupportPage />} />
