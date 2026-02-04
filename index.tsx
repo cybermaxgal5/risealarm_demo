@@ -42,59 +42,73 @@ const ScrollToTop = () => {
   return null;
 }
 
-const FeaturedNews = () => (
-  <section className="bg-[#F9F9F7] px-6 pb-16">
-    <div className="max-w-[1200px] mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <span className="text-[0.65rem] font-mono uppercase tracking-[0.25em] text-gray-500">Featured on</span>
-          <a 
-            href="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm hover:shadow-md transition-shadow hover:border-[#FF6B00]/30 group"
-          >
-            <img
-              src="/assets/WATE.png"
-              alt="WATE 6 News"
-              className="h-8 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+const FeaturedNews = () => {
+  const [isMuted, setIsMuted] = React.useState(true);
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  const handleUnmute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+    }
+  };
+
+  return (
+    <section className="bg-[#F9F9F7] px-6 pb-16">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <span className="text-[0.65rem] font-mono uppercase tracking-[0.25em] text-gray-500">Featured on</span>
+            <a 
+              href="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm hover:shadow-md transition-shadow hover:border-[#FF6B00]/30 group"
+            >
+              <img
+                src="/assets/WATE.png"
+                alt="WATE 6 News"
+                className="h-8 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <div className="relative overflow-hidden rounded-[1.75rem] bg-black border border-black/20 aspect-video shadow-2xl group">
+            <video
+              ref={videoRef}
+              src="/assets/Wate Video.mov"
+              autoPlay
+              muted={isMuted}
+              loop
+              playsInline
+              className="w-full h-full object-cover"
             />
-          </a>
+            {isMuted && (
+              <button
+                onClick={handleUnmute}
+                className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#FF6B00]/20 via-black/40 to-black/60 hover:opacity-80 transition-opacity cursor-pointer group"
+                aria-label="Unmute video"
+              >
+                <div className="flex flex-col items-center gap-4 text-center px-6">
+                  <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm md:text-base text-white/90 max-w-md font-medium">
+                    Click to unmute
+                  </p>
+                </div>
+              </button>
+            )}
+          </div>
         </div>
       </div>
-
-      <div className="mt-6">
-        <a
-          href="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block relative overflow-hidden rounded-[1.75rem] bg-black border border-black/20 aspect-video shadow-2xl group cursor-pointer"
-        >
-          <iframe
-            src="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/"
-            title="Rise Alarm featured on WATE 6 News"
-            className="w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B00]/20 via-black/60 to-black/80 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
-            <div className="flex flex-col items-center gap-4 text-center px-6">
-              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <p className="text-sm md:text-base text-white/90 max-w-md font-medium">
-                Watch our feature on WATE 6 News
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // Wrapper for Home Page Sections
 const HomePage = ({ onBuy }: { onBuy: () => void }) => (
