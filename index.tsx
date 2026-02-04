@@ -48,38 +48,49 @@ const FeaturedNews = () => (
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex items-center gap-4">
           <span className="text-[0.65rem] font-mono uppercase tracking-[0.25em] text-gray-500">Featured on</span>
-          <div className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm">
+          <a 
+            href="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 rounded-2xl bg-white border border-gray-200 px-4 py-2 shadow-sm hover:shadow-md transition-shadow hover:border-[#FF6B00]/30 group"
+          >
             <img
               src="/assets/WATE.png"
               alt="WATE 6 News"
-              className="h-8 md:h-10 w-auto object-contain"
+              className="h-8 md:h-10 w-auto object-contain group-hover:scale-105 transition-transform"
             />
-          </div>
+          </a>
         </div>
       </div>
 
       <div className="mt-6">
-        <div className="relative overflow-hidden rounded-[1.75rem] bg-black/95 border border-black/20 aspect-video flex items-center justify-center">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#ffffff22,transparent_55%),radial-gradient(circle_at_bottom,#FF6B0022,transparent_55%)] opacity-60" />
-          <div className="relative z-10 flex flex-col items-center gap-3 text-center px-6">
-            <div className="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center text-white/90 mb-1">
-              <span className="text-xs font-semibold tracking-[0.18em] uppercase">Play</span>
+        <a
+          href="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block relative overflow-hidden rounded-[1.75rem] bg-black border border-black/20 aspect-video shadow-2xl group cursor-pointer"
+        >
+          <iframe
+            src="https://www.wate.com/living-east-tennessee/rise-alarm-the-smart-wake-up-system-built-by-ut-students/"
+            title="Rise Alarm featured on WATE 6 News"
+            className="w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B00]/20 via-black/60 to-black/80 flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300">
+            <div className="flex flex-col items-center gap-4 text-center px-6">
+              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <p className="text-sm md:text-base text-white/90 max-w-md font-medium">
+                Watch our feature on WATE 6 News
+              </p>
             </div>
-            <p className="text-sm md:text-base text-white/80 max-w-md">
-              News segment from WATE Knoxville will appear here. We&apos;ll embed the video directly so it auto-plays once it&apos;s ready.
-            </p>
           </div>
-          {/* To embed for real later:
-            <video
-              src="/path-to-your-news-clip.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          */}
-        </div>
+        </a>
       </div>
     </div>
   </section>
