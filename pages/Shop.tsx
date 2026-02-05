@@ -18,18 +18,14 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
     const [loading, setLoading] = useState(true);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     
-    // Product images - update these filenames to match what you upload
+    // Product images
     const productImages = [
-        'product-images/image1.jpg',
-        'product-images/image2.jpg',
-        'product-images/image3.jpg',
-        'product-images/image4.jpg',
-        'product-images/image5.jpg',
-    ].filter((_, index) => {
-        // This will dynamically check which images exist, but for now we'll show all
-        // You can remove this filter once you know which images you've uploaded
-        return true;
-    });
+        'product-images/AM8A8618.JPG',
+        'product-images/AM8A8626.JPG',
+        'product-images/AM8A8635.JPG',
+        'product-images/AM8A8686.JPG',
+        'product-images/AM8A8704.JPG',
+    ];
 
     // Lade Produkt von Shopify beim Start
     useEffect(() => {
