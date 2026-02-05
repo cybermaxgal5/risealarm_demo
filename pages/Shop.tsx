@@ -84,12 +84,12 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                         <div className="space-y-4">
                             {/* Main Image */}
                             <TiltCard>
-                                <div className="bg-[#E5E5E2] rounded-[2.5rem] h-[40vh] md:h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden border border-gray-200 shadow-inner group">
+                                <div className="bg-[#E5E5E2] rounded-[2.5rem] aspect-square flex items-center justify-center relative overflow-hidden border border-gray-200 shadow-inner group">
                                     {productImages.length > 0 ? (
                                         <img
                                             src={`/assets/${productImages[selectedImageIndex]}`}
                                             alt={`${product?.title || 'Rise Alarm Pod'} - Image ${selectedImageIndex + 1}`}
-                                            className="w-full h-full object-contain p-8"
+                                            className="w-full h-full object-cover rounded-[2.5rem]"
                                             onError={(e) => {
                                                 // Fallback to ThePod if image doesn't exist
                                                 const target = e.target as HTMLImageElement;
@@ -122,7 +122,7 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                                             <img
                                                 src={`/assets/${image}`}
                                                 alt={`Thumbnail ${index + 1}`}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover rounded-xl"
                                                 onError={(e) => {
                                                     (e.target as HTMLImageElement).style.display = 'none';
                                                 }}
