@@ -90,19 +90,12 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                                             src={`/assets/${productImages[selectedImageIndex]}`}
                                             alt={`${product?.title || 'Rise Alarm Pod'} - Image ${selectedImageIndex + 1}`}
                                             className="w-full h-full object-cover rounded-[2.5rem]"
-                                            onError={(e) => {
-                                                // Fallback to ThePod if image doesn't exist
-                                                const target = e.target as HTMLImageElement;
-                                                target.style.display = 'none';
-                                                const fallback = target.nextElementSibling as HTMLElement;
-                                                if (fallback) fallback.style.display = 'flex';
-                                            }}
                                         />
-                                    ) : null}
-                                    <div className="w-[80%] md:w-full flex justify-center" style={{ display: productImages.length > 0 ? 'none' : 'flex' }}>
-                                        {/* Fallback to ThePod if no images */}
-                                        <ThePod scale={2} priority={true} />
-                                    </div>
+                                    ) : (
+                                        <div className="w-[80%] md:w-full flex justify-center">
+                                            <ThePod scale={2} priority={true} />
+                                        </div>
+                                    )}
                                 </div>
                             </TiltCard>
                             
