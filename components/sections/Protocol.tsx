@@ -56,7 +56,7 @@ export const ProtocolSection = () => {
       title: "Place Your Pod", 
       desc: "Put the Rise Alarm Pod across the room, in your bathroom, or anywhere that forces you to get up.",
       icon: MoveRight,
-      video: "PlacePod"
+      video: "PodPlace"
     },
     { 
       id: "03", 
@@ -119,7 +119,7 @@ export const ProtocolSection = () => {
                      {/* Video */}
                      <div className="mb-8 rounded-2xl overflow-hidden bg-black aspect-video">
                         <video
-                          src={`/assets/${step.video}.mov`}
+                          src={`/assets/${step.video}.mp4`}
                           autoPlay
                           muted
                           loop
@@ -170,7 +170,7 @@ export const ProtocolSection = () => {
                              {/* Video */}
                              <div className="mb-6 rounded-xl overflow-hidden bg-black aspect-video">
                                 <video
-                                  src={`/assets/${step.video}.mov`}
+                                  src={`/assets/${step.video}.mp4`}
                                   autoPlay
                                   muted
                                   loop
