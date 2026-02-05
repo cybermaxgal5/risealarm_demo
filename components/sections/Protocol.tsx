@@ -112,9 +112,7 @@ export const ProtocolSection = () => {
                  className="w-[600px] flex-shrink-0 mr-[30vw] relative z-10"
                >
                   {/* "Geiler" Card Styling - Removed Top Right Icon */}
-                  <div className="bg-white/80 backdrop-blur-2xl border border-white/60 p-12 rounded-[3rem] h-full relative group hover:border-[#FF6B00]/50 transition-all duration-700 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_80px_-20px_rgba(255,107,0,0.15)] overflow-hidden">
-                     {/* Gloss Effect */}
-                     <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+                  <div className="bg-white/80 backdrop-blur-2xl border border-white/60 p-12 rounded-[3rem] h-full relative group shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden">
                      
                      {/* Video */}
                      <div className="mb-8 rounded-2xl overflow-hidden bg-black aspect-video">
