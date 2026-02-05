@@ -16,6 +16,20 @@ const DEFAULT_PRODUCT = {
 export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) => void }) => {
     const [product, setProduct] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    
+    // Product images - update these filenames to match what you upload
+    const productImages = [
+        'product-images/image1.jpg',
+        'product-images/image2.jpg',
+        'product-images/image3.jpg',
+        'product-images/image4.jpg',
+        'product-images/image5.jpg',
+    ].filter((_, index) => {
+        // This will dynamically check which images exist, but for now we'll show all
+        // You can remove this filter once you know which images you've uploaded
+        return true;
+    });
 
     // Lade Produkt von Shopify beim Start
     useEffect(() => {
@@ -71,15 +85,57 @@ export const ShopPage = ({ onAddToCart }: { onAddToCart: (variantId?: string) =>
                 {/* Left: Product Gallery */}
                 <div className="order-1 lg:order-1">
                     <Reveal mode="blur">
-                        <TiltCard>
-                            <div className="bg-[#E5E5E2] rounded-[2.5rem] h-[40vh] md:h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden border border-gray-200 shadow-inner group">
-                                <div className="absolute inset-0 opacity-40 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-                                <div className="w-[80%] md:w-full flex justify-center">
-                                    {/* Priority load for Hero image to improve LCP */}
-                                    <ThePod scale={2} priority={true} />
+                        <div className="space-y-4">
+                            {/* Main Image */}
+                            <TiltCard>
+                                <div className="bg-[#E5E5E2] rounded-[2.5rem] h-[40vh] md:h-[50vh] lg:h-[70vh] flex items-center justify-center relative overflow-hidden border border-gray-200 shadow-inner group">
+                                    {productImages.length > 0 ? (
+                                        <img
+                                            src={`/assets/${productImages[selectedImageIndex]}`}
+                                            alt={`${product?.title || 'Rise Alarm Pod'} - Image ${selectedImageIndex + 1}`}
+                                            className="w-full h-full object-contain p-8"
+                                            onError={(e) => {
+                                                // Fallback to ThePod if image doesn't exist
+                                                const target = e.target as HTMLImageElement;
+                                                target.style.display = 'none';
+                                                const fallback = target.nextElementSibling as HTMLElement;
+                                                if (fallback) fallback.style.display = 'flex';
+                                            }}
+                                        />
+                                    ) : null}
+                                    <div className="w-[80%] md:w-full flex justify-center" style={{ display: productImages.length > 0 ? 'none' : 'flex' }}>
+                                        {/* Fallback to ThePod if no images */}
+                                        <ThePod scale={2} priority={true} />
+                                    </div>
                                 </div>
-                            </div>
-                        </TiltCard>
+                            </TiltCard>
+                            
+                            {/* Thumbnail Gallery */}
+                            {productImages.length > 1 && (
+                                <div className="flex gap-3 overflow-x-auto pb-2">
+                                    {productImages.map((image, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setSelectedImageIndex(index)}
+                                            className={`flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden border-2 transition-all ${
+                                                selectedImageIndex === index
+                                                    ? 'border-[#FF6B00] shadow-md scale-105'
+                                                    : 'border-gray-200 hover:border-gray-300'
+                                            }`}
+                                        >
+                                            <img
+                                                src={`/assets/${image}`}
+                                                alt={`Thumbnail ${index + 1}`}
+                                                className="w-full h-full object-cover"
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                }}
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </Reveal>
                 </div>
 

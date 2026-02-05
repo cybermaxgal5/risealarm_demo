@@ -48,19 +48,22 @@ export const ProtocolSection = () => {
       id: "01", 
       title: "Set Your Alarm", 
       desc: "Choose your wake-up time, sound, and days inside the Rise app.",
-      icon: Smartphone 
+      icon: Smartphone,
+      video: "SetAlarm"
     },
     { 
       id: "02", 
       title: "Place Your Pod", 
       desc: "Put the Rise Alarm Pod across the room, in your bathroom, or anywhere that forces you to get up.",
-      icon: MoveRight 
+      icon: MoveRight,
+      video: "PlacePod"
     },
     { 
       id: "03", 
       title: "Get Up & Tap", 
       desc: "When your alarm rings, the only way to stop it is to stand up, walk to the Pod, and tap your phone.",
-      icon: Wifi 
+      icon: Wifi,
+      video: "GetUpTap"
     }
   ];
 
@@ -113,6 +116,18 @@ export const ProtocolSection = () => {
                      {/* Gloss Effect */}
                      <div className="absolute -inset-full bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-45 group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
                      
+                     {/* Video */}
+                     <div className="mb-8 rounded-2xl overflow-hidden bg-black aspect-video">
+                        <video
+                          src={`/assets/${step.video}.mov`}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          className="w-full h-full object-cover"
+                        />
+                     </div>
+                     
                      <div className="w-20 h-20 bg-gradient-to-br from-white to-gray-50 rounded-2xl flex items-center justify-center text-[#FF6B00] mb-8 group-hover:scale-110 transition-transform duration-500 shadow-sm border border-gray-100">
                         <step.icon size={40} />
                      </div>
@@ -152,6 +167,17 @@ export const ProtocolSection = () => {
                             {i+1}
                         </div>
                         <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-lg">
+                             {/* Video */}
+                             <div className="mb-6 rounded-xl overflow-hidden bg-black aspect-video">
+                                <video
+                                  src={`/assets/${step.video}.mov`}
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                  className="w-full h-full object-cover"
+                                />
+                             </div>
                              <div className="mb-4 text-[#FF6B00]">
                                 <step.icon size={32} />
                              </div>

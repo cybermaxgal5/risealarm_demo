@@ -118,8 +118,8 @@ const HomePage = ({ onBuy }: { onBuy: () => void }) => (
   <>
     <Hero onOrder={onBuy} />
     <div className="w-full border-t border-gray-200 my-8 md:my-12"></div>
-    <FeaturedNews />
     <ProtocolSection />
+    <FeaturedNews />
     <TestimonialsSection />
     <HomePricing onBuy={onBuy} />
   </>
