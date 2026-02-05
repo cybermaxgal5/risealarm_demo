@@ -49,21 +49,21 @@ export const ProtocolSection = () => {
       title: "Set Your Alarm", 
       desc: "Choose your wake-up time, sound, and days inside the Rise app.",
       icon: Smartphone,
-      video: "SetAlarm"
+      video: "SetAlarm.mp4"
     },
     { 
       id: "02", 
       title: "Place Your Pod", 
       desc: "Put the Rise Alarm Pod across the room, in your bathroom, or anywhere that forces you to get up.",
       icon: MoveRight,
-      video: "PodPlace"
+      video: "PlacePod.MP4"
     },
     { 
       id: "03", 
       title: "Get Up & Tap", 
       desc: "When your alarm rings, the only way to stop it is to stand up, walk to the Pod, and tap your phone.",
       icon: Wifi,
-      video: "GetUpTap"
+      video: "GetUpTap.MP4"
     }
   ];
 
@@ -119,7 +119,7 @@ export const ProtocolSection = () => {
                      {/* Video */}
                      <div className="mb-8 rounded-2xl overflow-hidden bg-black aspect-video">
                         <video
-                          src={`/assets/${step.video}.mp4`}
+                          src={`/assets/${step.video}`}
                           autoPlay
                           muted
                           loop
@@ -170,7 +170,7 @@ export const ProtocolSection = () => {
                              {/* Video */}
                              <div className="mb-6 rounded-xl overflow-hidden bg-black aspect-video">
                                 <video
-                                  src={`/assets/${step.video}.mp4`}
+                                  src={`/assets/${step.video}`}
                                   autoPlay
                                   muted
                                   loop
